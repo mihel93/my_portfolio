@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>What makes a Steam game succeed? | Mihail Deligrozev</title>
-  <meta name="description" content="Defining and testing success indicators on a large Steam games dataset, then building a model to predict them.">
+  <title>What makes a Steam game successful? | Mihail Deligrozev</title>
+  <meta name="description" content="Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,55 +30,71 @@
       <div class="post-body">
         <a class="back" href="./">All posts</a>
 
-        <h1>What makes a Steam game succeed?</h1>
-        <p class="post-lead">Defining and testing success indicators on a large Steam games dataset, then building a model to predict them.</p>
-        <ul class="tags"><li>Python</li><li>Modelling</li><li>Kaggle</li></ul>
+        <h1>What makes a Steam game successful?</h1>
+        <p class="post-lead">Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.</p>
+        <ul class="tags"><li>Python</li><li>SQL / DuckDB</li><li>Gradient boosting</li><li>SHAP</li></ul>
 
         <dl class="facts" aria-label="Project facts">
-          <div><dt>Data</dt><dd>Steam games dataset (Kaggle)</dd></div>
-          <div><dt>Tools</dt><dd>Python, pandas, scikit-learn</dd></div>
+          <div><dt>Data</dt><dd>Steam Games Dataset (Kaggle), 125,855 games</dd></div>
+          <div><dt>Tools</dt><dd>pandas, DuckDB, SQL, scikit-learn, SHAP</dd></div>
           <div><dt>Type</dt><dd>Personal project, Kaggle notebook</dd></div>
         </dl>
 
         <h2>The question</h2>
-        <p>What does &quot;success&quot; mean for a Steam game, and which features predict it?</p>
-        <p><span class="todo">TODO: why this question matters, and who would use the answer.</span></p>
+        <p>What does "successful" mean for a game on Steam, which features known at launch go with success, and how well can a model predict it before the market has spoken?</p>
 
-        <h2>The data</h2>
-        <p>A large public Kaggle dataset of Steam games with details such as price, genres, tags, reviews and estimated ownership.</p>
-        <p><span class="todo">TODO: size of the dataset, time period, and any cleaning problems you had to solve.</span></p>
+        <h2>The data, and a broken file</h2>
+        <p>The raw file had 39 column names but 40 values in every row: two names were glued together ("DiscountDLC count"). Read naively, every column after it shifts by one and the AppID column holds game names. I fixed the header before loading, cleaned the data in pandas and stored it as a small relational model in DuckDB, with separate bridge tables for genres and tags so questions like "success rate per genre" become a plain SQL join.</p>
+        <p>Lossless type changes cut the tables from 148.9 MB to 53.4 MB in memory, and Parquet stores them in 10.2 MB on disk, four times smaller than CSV.</p>
 
-        <h2>Approach</h2>
+        <h2>Defining success</h2>
+        <p>Attention on Steam is winner-takes-most: the top 1% of games hold 80% of all reviews. "Above average" is therefore a misleading target, so I defined success as a top percentile, in four ways:</p>
         <ul>
-          <li>Define candidate success indicators and check how well they agree</li>
-          <li>Explore which game features relate to success</li>
-          <li>Build and evaluate a model to predict success</li>
+          <li><strong>Commercial:</strong> top 10% by owners <em>within its release year</em>, so old games aren't favoured just for being old</li>
+          <li><strong>Quality:</strong> at least 50 reviews and 80% positive</li>
+          <li><strong>Engagement:</strong> top 10% by median playtime</li>
+          <li><strong>Hit:</strong> commercial and quality at once, the strictest label (5.9% of games)</li>
+        </ul>
+        <p>Reach and quality turned out to be different things: owners and positive-review share are uncorrelated, and only 26% of commercial hits are also well liked.</p>
+        <figure>
+          <img src="../images/projects/steam-games-1.png" alt="Funnel and Lorenz curve showing that the top 1% of games hold most reviews" loading="lazy">
+          <figcaption>Attention is extremely unequal: most games get almost no reviews.</figcaption>
+        </figure>
+
+        <h2>Which launch-time features matter?</h2>
+        <p>Achievements (AUC 0.73), the number of Steam categories (0.72) and the number of supported languages (0.72) separate hits from other games best. The biggest yes/no gap is DLC: 19.6% of games with DLC are hits, against 3.6% without. Among genres, RPG has the highest lift (1.5x the average success rate).</p>
+        <figure>
+          <img src="../images/projects/steam-games-2.png" alt="Lollipop chart of AUC per launch-time feature" loading="lazy">
+          <figcaption>AUC per feature for the hit label. 0.5 means no signal.</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/projects/steam-games-3.png" alt="Dumbbell chart comparing success rates with and without each feature" loading="lazy">
+          <figcaption>Success rate with and without each feature. DLC shows the largest gap.</figcaption>
+        </figure>
+
+        <h2>Predicting hits</h2>
+        <p>A gradient boosting model trained only on launch-time facts, on games up to 2021 and tested on later ones, reaches AUC 0.80 for the hit label. Its top 10% of predictions contain 43% of the actual hits. A developer's track record adds another 0.03 AUC.</p>
+        <figure>
+          <img src="../images/projects/steam-games-4.png" alt="Cumulative gains curve and calibration curve for the hit model" loading="lazy">
+          <figcaption>Left: the top 10% of picks catch 43% of hits. Right: predicted chances need recalibrating because the base rate drifted.</figcaption>
+        </figure>
+
+        <h2>What to keep in mind</h2>
+        <ul>
+          <li>These are associations, not causes: successful games can afford more languages and DLC, so some indicators follow success rather than drive it.</li>
+          <li>Owner counts are estimated buckets, so commercial success is approximate.</li>
+          <li>The biggest drivers, such as marketing, wishlists, the quality of the game itself and luck, are not in this data.</li>
         </ul>
 
-        <!-- Replace the placeholder with a real chart: save it as images/steam-games-1.png
-        <figure>
-          <img src="../images/steam-games-1.png" alt="Describe what the chart shows">
-          <figcaption>Short caption explaining the chart.</figcaption>
-        </figure>
-        -->
-        <figure>
-          <div class="img-placeholder">Chart goes here: images/steam-games-1.png</div>
-        </figure>
-
-        <h2>What I found</h2>
-        <p><span class="todo">TODO: your 2–4 key findings, with the numbers behind them.</span></p>
-
-        <h2>What I'd do next</h2>
-        <p><span class="todo">TODO: limitations of the analysis and how you'd extend it.</span></p>
-
         <div class="post-links">
-          <!-- Replace # with the link to the notebook or repo -->
-          <a class="btn btn-primary" href="#">View the notebook</a>
-          <a class="btn btn-ghost" href="#">Code on GitHub</a>
+          <a class="btn btn-primary" href="../notebooks/steam-game-success.html">Read the full notebook</a>
+          <!-- Add your repo link and uncomment:
+          <a class="btn btn-ghost" href="https://github.com/yourusername/REPO">Code on GitHub</a>
+          -->
         </div>
 
         <nav class="post-nav" aria-label="More posts">
-          <a class="next" href="hr-attrition.html">Next: Employee attrition drivers</a>
+          <a class="next" href="hr-attrition.html">Next: Employee attrition: who leaves, and what would keep them</a>
         </nav>
       </div>
     </article>

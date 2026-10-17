@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Employee attrition drivers | Mihail Deligrozev</title>
-  <meta name="description" content="Statistical segmentation and a Random Forest model on the IBM HR dataset to find who leaves and why.">
+  <title>Employee attrition: who leaves, and what would keep them | Mihail Deligrozev</title>
+  <meta name="description" content="From raw HR data to a retention strategy: segmentation, statistical tests with effect sizes, a predictive model and a business case with explicit assumptions.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,55 +30,67 @@
       <div class="post-body">
         <a class="back" href="./">All posts</a>
 
-        <h1>Employee attrition drivers</h1>
-        <p class="post-lead">Statistical segmentation and a Random Forest model on the IBM HR dataset to find who leaves and why.</p>
-        <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Random Forest</li></ul>
+        <h1>Employee attrition: who leaves, and what would keep them</h1>
+        <p class="post-lead">From raw HR data to a retention strategy: segmentation, statistical tests with effect sizes, a predictive model and a business case with explicit assumptions.</p>
+        <ul class="tags"><li>Python</li><li>Logistic regression</li><li>Statistics</li><li>Business case</li></ul>
 
         <dl class="facts" aria-label="Project facts">
-          <div><dt>Data</dt><dd>IBM HR Analytics Employee Attrition dataset</dd></div>
-          <div><dt>Tools</dt><dd>Python, pandas, scikit-learn</dd></div>
-          <div><dt>Type</dt><dd>Personal project</dd></div>
+          <div><dt>Data</dt><dd>IBM HR Analytics Attrition dataset, 1,470 employees</dd></div>
+          <div><dt>Tools</dt><dd>pandas, SciPy, scikit-learn, matplotlib</dd></div>
+          <div><dt>Type</dt><dd>Personal project, Kaggle notebook</dd></div>
         </dl>
 
         <h2>The question</h2>
-        <p>Which employees are most likely to leave, and what factors drive it?</p>
-        <p><span class="todo">TODO: why this question matters, and who would use the answer.</span></p>
+        <p>Who leaves, why, how well can it be predicted, and which retention measures would be worth their cost?</p>
 
         <h2>The data</h2>
-        <p>The IBM HR Analytics dataset: a fictional but widely used set of employee records with an attrition flag.</p>
-        <p><span class="todo">TODO: size of the dataset, time period, and any cleaning problems you had to solve.</span></p>
+        <p>IBM's HR Analytics dataset: 1,470 employees and 35 columns, with no missing values or duplicates. It's fictional, created by IBM data scientists for teaching, and a single snapshot: it shows who left, not when. 237 employees (16.1%) left.</p>
 
-        <h2>Approach</h2>
+        <h2>Where attrition is concentrated</h2>
+        <p>Risk is far from evenly spread. Sales Representatives leave at 39.8%, employees in their first two years at 29.8%, under-25s at 35.8% and the lowest income band at 28.6%. Senior roles are the most stable: Research Directors 2.5%, Managers 4.9%.</p>
+        <figure>
+          <img src="../images/projects/hr-attrition-1.png" alt="Bar charts of attrition rate by department and by job role" loading="lazy">
+          <figcaption>Attrition by department and job role, with 95% intervals.</figcaption>
+        </figure>
+
+        <h2>Which factors matter most</h2>
+        <p>I tested every factor the same way and ranked them by effect size (Cramér's V) rather than p-value, because with 1,470 people even tiny differences are "significant". Overtime is the strongest single factor: 30.5% attrition with overtime against 10.4% without, 2.9 times higher. Leavers also earn less, with a median monthly income of $3,202 against $5,204.</p>
+        <figure>
+          <img src="../images/projects/hr-attrition-2.png" alt="Effect size per factor, with overtime highest" loading="lazy">
+          <figcaption>Effect size per factor. Overtime has by far the strongest link with leaving.</figcaption>
+        </figure>
+
+        <h2>Predicting who is at risk</h2>
+        <p>Only 16% of employees left, so predicting "everyone stays" is already 84% accurate and useless. I compared models on AUC instead: logistic regression reaches 0.82 on the test set, beating a random forest (0.77). Flagging the top 20% of risk scores finds 62% of leavers. At the chosen threshold, 53% of flagged employees actually leave, against 16% if picked at random.</p>
+        <figure>
+          <img src="../images/projects/hr-attrition-3.png" alt="ROC curves and cumulative gains curve for the models" loading="lazy">
+          <figcaption>Logistic regression ranks leavers best. Checking 1 in 5 employees finds 62% of leavers.</figcaption>
+        </figure>
+
+        <h2>The business case</h2>
+        <p>At an assumed $50,000 per leaver, I compared four retention measures. A risk score with stay interviews (+$1.80M) and an early-career programme (+$1.62M) give the highest net value. Targeted pay rises don't pay back on replacement cost alone, though they may still be right for fairness reasons.</p>
+        <figure>
+          <img src="../images/projects/hr-attrition-4.png" alt="Net value of four retention scenarios" loading="lazy">
+          <figcaption>Net value per scenario. Costs and prevention rates are stated assumptions.</figcaption>
+        </figure>
+
+        <h2>What to keep in mind</h2>
         <ul>
-          <li>Segment employees statistically to compare attrition rates between groups</li>
-          <li>Train a Random Forest classifier to predict attrition</li>
-          <li>Use feature importance to identify the main drivers</li>
+          <li>The data is fictional and has no dates, so rates are shares of one workforce, not annual turnover.</li>
+          <li>Overtime, pay and satisfaction go with leaving; this data can't prove that changing them keeps people.</li>
+          <li>A risk score should never drive decisions about individuals without human review.</li>
         </ul>
-
-        <!-- Replace the placeholder with a real chart: save it as images/hr-attrition-1.png
-        <figure>
-          <img src="../images/hr-attrition-1.png" alt="Describe what the chart shows">
-          <figcaption>Short caption explaining the chart.</figcaption>
-        </figure>
-        -->
-        <figure>
-          <div class="img-placeholder">Chart goes here: images/hr-attrition-1.png</div>
-        </figure>
-
-        <h2>What I found</h2>
-        <p><span class="todo">TODO: your 2–4 key findings, with the numbers behind them.</span></p>
-
-        <h2>What I'd do next</h2>
-        <p><span class="todo">TODO: limitations of the analysis and how you'd extend it.</span></p>
+        <p>Next, I'd collect exit dates to model <em>time</em> to leaving, and test retention measures as a pilot with a comparison group.</p>
 
         <div class="post-links">
-          <!-- Replace # with the link to the notebook or repo -->
-          <a class="btn btn-primary" href="#">View the notebook</a>
-          <a class="btn btn-ghost" href="#">Code on GitHub</a>
+          <a class="btn btn-primary" href="../notebooks/ibm-hr-attrition.html">Read the full notebook</a>
+          <!-- Add your repo link and uncomment:
+          <a class="btn btn-ghost" href="https://github.com/yourusername/REPO">Code on GitHub</a>
+          -->
         </div>
 
         <nav class="post-nav" aria-label="More posts">
-          <a class="prev" href="steam-games.html">Previous: What makes a Steam game succeed?</a><a class="next" href="hague-energy-labels.html">Next: The Hague energy labels</a>
+          <a class="prev" href="steam-games.html">Previous: What makes a Steam game successful?</a><a class="next" href="hague-energy-labels.html">Next: Do richer neighbourhoods live in greener homes?</a>
         </nav>
       </div>
     </article>

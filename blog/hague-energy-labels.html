@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>The Hague energy labels | Mihail Deligrozev</title>
-  <meta name="description" content="How energy efficiency is distributed across The Hague&#x27;s housing stock.">
+  <title>Do richer neighbourhoods live in greener homes? | Mihail Deligrozev</title>
+  <meta name="description" content="Household income, energy labels and neighbourhood types across the 114 neighbourhoods of The Hague, with spatial statistics and K-means clustering.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
@@ -30,55 +30,67 @@
       <div class="post-body">
         <a class="back" href="./">All posts</a>
 
-        <h1>The Hague energy labels</h1>
-        <p class="post-lead">How energy efficiency is distributed across The Hague&#x27;s housing stock.</p>
-        <ul class="tags"><li>Python</li><li>Open data</li></ul>
+        <h1>Do richer neighbourhoods live in greener homes?</h1>
+        <p class="post-lead">Household income, energy labels and neighbourhood types across the 114 neighbourhoods of The Hague, with spatial statistics and K-means clustering.</p>
+        <ul class="tags"><li>Python</li><li>geopandas</li><li>Spatial analysis</li><li>K-means</li></ul>
 
         <dl class="facts" aria-label="Project facts">
-          <div><dt>Data</dt><dd>Energy label data for The Hague (open data)</dd></div>
-          <div><dt>Tools</dt><dd>Python, pandas</dd></div>
-          <div><dt>Type</dt><dd>Personal project</dd></div>
+          <div><dt>Data</dt><dd>Den Haag in Cijfers: energy labels and income per neighbourhood</dd></div>
+          <div><dt>Tools</dt><dd>geopandas, scikit-learn, SciPy, matplotlib</dd></div>
+          <div><dt>Type</dt><dd>TU Delft coursework (EPA-1316), extended</dd></div>
         </dl>
 
         <h2>The question</h2>
-        <p>Which parts of The Hague&#x27;s housing stock have the worst energy labels, and what do they have in common?</p>
-        <p><span class="todo">TODO: why this question matters, and who would use the answer.</span></p>
+        <p>Do neighbourhoods in The Hague with higher household incomes have more energy-efficient homes?</p>
+        <p><strong>Short answer: no, and in the older city it's the other way round.</strong></p>
 
         <h2>The data</h2>
-        <p>Open energy label records for homes in The Hague.</p>
-        <p><span class="todo">TODO: size of the dataset, time period, and any cleaning problems you had to solve.</span></p>
+        <p>An export from Den Haag in Cijfers with the number of homes per energy label (A++ to G) and the average standardised disposable income per neighbourhood, joined to the boundaries of all 114 neighbourhoods. It covers 261,797 homes with a registered label. Two traps came up while checking the data: the export lists label G before F, and its last row ("Unknown") isn't a neighbourhood at all. I also left out areas with fewer than 100 labelled homes, because one home with an A-label makes a neighbourhood look 100% A.</p>
 
-        <h2>Approach</h2>
+        <h2>Income and labels on the map</h2>
+        <p>Putting the maps side by side, the income map looks like the map of <em>bad</em> labels: the wealthy dune-side areas in the north-west are also where most homes are E, F or G. The A-labels sit somewhere else entirely, mainly in the new-build east.</p>
+        <figure>
+          <img src="../images/projects/hague-energy-labels-1.png" alt="Three maps of The Hague: income, share of A-label homes, share of E to G homes" loading="lazy">
+          <figcaption>Income (left), A-label share (middle) and E–G share (right). The richest areas have the most E–G homes.</figcaption>
+        </figure>
+
+        <h2>Testing the hypothesis</h2>
+        <p>Across the whole city, income has no clear link with the share of A-label homes (Spearman ρ = −0.14, p = 0.16). That near-zero result hides two opposite patterns. Outside the new-build district of Leidschenveen-Ypenburg, richer neighbourhoods have clearly <em>worse</em> labels (ρ = +0.47 with the share of E–G homes). Inside it, everyone lives in recent housing, so income makes little difference.</p>
+        <figure>
+          <img src="../images/projects/hague-energy-labels-2.png" alt="Scatter plots of income against A-label share and E to G share" loading="lazy">
+          <figcaption>Income against label shares. Aqua points are the new-build district.</figcaption>
+        </figure>
+        <figure>
+          <img src="../images/projects/hague-energy-labels-3.png" alt="Forest plot of correlations with 95 percent bootstrap intervals" loading="lazy">
+          <figcaption>Correlations with 95% bootstrap intervals: two opposite effects cancel out citywide.</figcaption>
+        </figure>
+        <p>The high-income quarter of neighbourhoods has a median of 71% E–G homes, against 40% for the rest. Labels follow the age of the housing, not the income of the people living in it.</p>
+
+        <h2>Neighbourhood types</h2>
+        <p>K-means clustering on the label mix finds five stable types, from "mostly A" to "G-dominated". K-means never saw the map, yet the types form clear zones: half of all neighbouring pairs share a type, against 26% by chance. The G-dominated type covers the pre-war centre and north-west, including most of the city's wealthiest areas.</p>
+        <figure>
+          <img src="../images/projects/hague-energy-labels-4.png" alt="Map of The Hague coloured by five neighbourhood types" loading="lazy">
+          <figcaption>The five types form clear zones on the map.</figcaption>
+        </figure>
+
+        <h2>Why it matters</h2>
+        <p>The usual worry is that poor households live in poorly insulated homes. In The Hague, the largest stock of E–G homes is in wealthy neighbourhoods such as Marlot, Duttendel and Vogelwijk (86–94% E–G), where owners can pay for insulation themselves.</p>
+
+        <h2>What to keep in mind</h2>
         <ul>
-          <li>Load and clean the energy label records</li>
-          <li>Compare labels across neighbourhoods and building characteristics</li>
-          <li>Visualise where the least efficient homes are</li>
+          <li>The new-build flag is only a rough stand-in for building age; the average construction year per neighbourhood would be a better test.</li>
+          <li>Neighbourhoods strongly resemble their neighbours (Moran's I ≈ 0.6), so the p-values are somewhat optimistic.</li>
         </ul>
 
-        <!-- Replace the placeholder with a real chart: save it as images/hague-energy-labels-1.png
-        <figure>
-          <img src="../images/hague-energy-labels-1.png" alt="Describe what the chart shows">
-          <figcaption>Short caption explaining the chart.</figcaption>
-        </figure>
-        -->
-        <figure>
-          <div class="img-placeholder">Chart goes here: images/hague-energy-labels-1.png</div>
-        </figure>
-
-        <h2>What I found</h2>
-        <p><span class="todo">TODO: your 2–4 key findings, with the numbers behind them.</span></p>
-
-        <h2>What I'd do next</h2>
-        <p><span class="todo">TODO: limitations of the analysis and how you'd extend it.</span></p>
-
         <div class="post-links">
-          <!-- Replace # with the link to the notebook or repo -->
-          <a class="btn btn-primary" href="#">View the notebook</a>
-          <a class="btn btn-ghost" href="#">Code on GitHub</a>
+          <a class="btn btn-primary" href="../notebooks/the-hague-energy-labels.html">Read the full notebook</a>
+          <!-- Add your repo link and uncomment:
+          <a class="btn btn-ghost" href="https://github.com/yourusername/REPO">Code on GitHub</a>
+          -->
         </div>
 
         <nav class="post-nav" aria-label="More posts">
-          <a class="prev" href="hr-attrition.html">Previous: Employee attrition drivers</a><a class="next" href="education-spending.html">Next: Education access vs. national spending</a>
+          <a class="prev" href="hr-attrition.html">Previous: Employee attrition: who leaves, and what would keep them</a><a class="next" href="education-spending.html">Next: Do richer countries keep more children in school?</a>
         </nav>
       </div>
     </article>
