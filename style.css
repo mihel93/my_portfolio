@@ -777,10 +777,6 @@ a { color: var(--delft); }
   transition: transform 0.2s ease, fill 0.2s ease, opacity 0.2s ease;
 }
 .sc-dots circle:hover { transform: scale(1.8); fill: var(--delft); opacity: 1; }
-.sc-leader { fill: none; stroke: var(--muted); stroke-width: 1.5; }
-.sc-note, .sc-axis-label { font-family: var(--mono); fill: var(--muted); }
-.sc-note { font-size: 15px; }
-.sc-axis-label { font-size: 16px; fill: var(--ink); font-weight: 500; }
 
 .sc-point {
   position: absolute;
@@ -871,10 +867,21 @@ a { color: var(--delft); }
 .g-mark:hover,
 .g-mark:focus-visible { transform: translate(-50%, -50%) rotate(45deg) scale(1.4); }
 
-/* Star schema: a table lifts and its relationship is highlighted */
-.st-table { transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; }
-.st-table:hover,
-.st-table:focus-visible { transform: translateY(-3px); box-shadow: 5px 6px 0 var(--delft-tint); }
+/* Star schema: hovering a skill highlights that row and its table's relationship */
+.st-table { transition: opacity 0.2s ease, border-color 0.2s ease; }
+.st-table li {
+  cursor: help;
+  transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
+}
+.st-table li:hover,
+.st-table li:focus-visible {
+  background: var(--delft-tint);
+  color: var(--delft);
+  padding-left: 34px;
+  outline: none;
+}
+.st-table li:hover::before,
+.st-table li:focus-visible::before { border-color: var(--delft); background: var(--delft); }
 .star.has-focus .st-table:not(.is-linked) { opacity: 0.45; }
 .st-table.is-linked:not(.st-fact) { border-color: var(--delft); }
 .st-edge .st-rel  { transition: stroke 0.2s ease, stroke-width 0.2s ease; }

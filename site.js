@@ -136,12 +136,18 @@
     });
     fact.classList.toggle('is-linked', !!key);
   }
-  star.querySelectorAll('.st-table').forEach(function (t) {
-    var key = t === fact ? 'all' : t.getAttribute('data-key');
-    t.addEventListener('mouseenter', function () { highlight(key); });
-    t.addEventListener('mouseleave', function () { highlight(null); });
-    t.addEventListener('focus', function () { highlight(key); });
-    t.addEventListener('blur', function () { highlight(null); });
+  // Hovering a single skill highlights its table's relationship.
+  // In the fact table, a key highlights the dimension it points to.
+  star.querySelectorAll('.st-table li').forEach(function (li) {
+    var table = li.closest('.st-table');
+    var key = li.getAttribute('data-ref') ||
+              (table === fact ? null : table.getAttribute('data-key'));
+    function on() { if (key) highlight(key); }
+    function off() { highlight(null); }
+    li.addEventListener('mouseenter', on);
+    li.addEventListener('mouseleave', off);
+    li.addEventListener('focus', on);
+    li.addEventListener('blur', off);
   });
 
   window.addEventListener('resize', draw);
