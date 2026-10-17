@@ -16,11 +16,12 @@
 
   <header class="site-header">
     <div class="wrap header-inner">
-      <a class="logo" href="#top">m.deligrozev</a>
+      <a class="logo" href="#top">mihail deligrozev</a>
       <nav aria-label="Main">
-        <a href="#work">Work</a>
-        <a href="blog/">Blog</a>
         <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#work">Projects</a>
+        <a href="blog/">Blog</a>
         <a href="#contact">Contact</a>
       </nav>
     </div>
@@ -32,12 +33,10 @@
     <section class="hero">
       <div class="wrap hero-grid">
         <div class="hero-text">
-          <p class="hero-kicker">Data analyst, Voorburg NL</p>
-          <h1>I turn messy data into reports people actually use.</h1>
+          <p class="hero-kicker">Data analyst</p>
+          <h1>Mihail Deligrozev</h1>
           <p class="lead">
-            Power BI, Python and SQL. Engineer by training, analyst by trade:
-            I've delivered dashboards and analysis for clients in gaming,
-            real estate and HR tech since 2023.
+            Power BI, Python and SQL. Engineer by training, analyst by trade.
           </p>
           <div class="actions">
             <a class="btn btn-primary" href="#work">See my projects</a>
@@ -45,86 +44,9 @@
           </div>
         </div>
 
-        <!-- Spec sheet: the hero's signature element -->
-        <dl class="spec" aria-label="Quick facts">
-          <div><dt>Tools</dt><dd>Power BI, DAX, Python, pandas, SQL</dd></div>
-          <div><dt>Education</dt><dd>MSc Engineering &amp; Policy Analysis, TU Delft</dd></div>
-          <div><dt>Certified</dt><dd>Microsoft PL-300 Power BI Data Analyst</dd></div>
-          <div><dt>Looking for</dt><dd>Permanent role in data analytics or data engineering</dd></div>
-        </dl>
-      </div>
-    </section>
-
-    <!-- Projects -->
-    <section id="work" class="section">
-      <div class="wrap">
-        <h2>Projects</h2>
-        <p class="section-intro">Personal and academic case studies. Click a project to read the full write-up.</p>
-
-        <ul class="projects">
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/dutch-housing.html">Dutch housing market price trends</a></h3>
-              <p>Price trends across Dutch regions using data pulled directly from the CBS StatLine API, mapped by municipality.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>pandas</li><li>geopandas</li><li>CBS API</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/sofia-transport.html">Sofia public transport network</a></h3>
-              <p>A Power BI data model built on Sofia's GTFS feed, with DAX measures for routes, stops and service frequency.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Power BI</li><li>DAX</li><li>GTFS</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/steam-games.html">What makes a Steam game succeed?</a></h3>
-              <p>Defining and testing success indicators on a large Steam games dataset, then building a model to predict them.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>Modelling</li><li>Kaggle</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/hague-airbnb.html">The Hague Airbnb market</a></h3>
-              <p>Exploratory and geospatial analysis of Airbnb listings in The Hague: where they are, what they cost, and why.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>seaborn</li><li>Geospatial</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/hague-energy-labels.html">The Hague energy labels</a></h3>
-              <p>How energy efficiency is distributed across The Hague's housing stock.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>Open data</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/hr-attrition.html">Employee attrition drivers</a></h3>
-              <p>Statistical segmentation and a Random Forest model on the IBM HR dataset to find who leaves and why.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Random Forest</li></ul>
-          </li>
-
-          <li class="project">
-            <div class="project-main">
-              <h3><a href="blog/education-spending.html">Education access vs. national spending</a></h3>
-              <p>TU Delft case study using World Bank indicators to compare out-of-school rates with GDP and education spending.</p>
-              <span class="read-more" aria-hidden="true">Read the write-up</span>
-            </div>
-            <ul class="tags"><li>Python</li><li>World Bank WDI</li></ul>
-          </li>
-        </ul>
+        <figure class="portrait">
+          <img src="images/mihail.jpg" alt="Portrait of Mihail Deligrozev" width="640" height="800">
+        </figure>
       </div>
     </section>
 
@@ -139,11 +61,67 @@
             in economics and finance. That mix shapes how I work: rigorous with the
             numbers, and focused on the decision the analysis is meant to support.
           </p>
-          <p>
-            I've lived in the Netherlands for about six years and I'm looking for a
-            permanent role in data analytics or data engineering.
-          </p>
         </div>
+      </div>
+    </section>
+
+    <!-- Skills: taken from the CV -->
+    <section id="skills" class="section section-alt">
+      <div class="wrap">
+        <h2>Skills</h2>
+        <dl class="spec skills" aria-label="Technical skills">
+          <div><dt>Power BI &amp; data modeling</dt><dd>Dashboard design, slicers, drilldowns, bookmarks, DAX measures &amp; KPIs, Power Query / ETL, Azure Data Factory, star schema / data modeling</dd></div>
+          <div><dt>Data analysis &amp; modeling</dt><dd>Python (pandas, NumPy), SQL, trend analysis, statistical modeling, cohort analysis, predictive / LTV analysis</dd></div>
+          <div><dt>Data integration</dt><dd>SQL, Excel, APIs, Google Analytics, Firebase Analytics, App Store Connect, Google Play Console</dd></div>
+          <div><dt>Visualization &amp; reporting</dt><dd>Dash, Plotly, Matplotlib, Seaborn, automated reporting, performance dashboards</dd></div>
+          <div><dt>Tools &amp; collaboration</dt><dd>Git, GitHub, Jira, Trello, Slack, Excel (pivot tables, advanced formulas)</dd></div>
+        </dl>
+      </div>
+    </section>
+
+    <!-- Projects -->
+    <section id="work" class="section">
+      <div class="wrap">
+        <h2>Projects</h2>
+        <p class="section-intro">Personal and academic case studies. Click a project to read the full write-up.</p>
+
+        <ul class="projects">
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="blog/steam-games.html">What makes a Steam game succeed?</a></h3>
+              <p>Defining and testing success indicators on a large Steam games dataset, then building a model to predict them.</p>
+              <span class="read-more" aria-hidden="true">Read the write-up</span>
+            </div>
+            <ul class="tags"><li>Python</li><li>Modelling</li><li>Kaggle</li></ul>
+          </li>
+
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="blog/hr-attrition.html">Employee attrition drivers</a></h3>
+              <p>Statistical segmentation and a Random Forest model on the IBM HR dataset to find who leaves and why.</p>
+              <span class="read-more" aria-hidden="true">Read the write-up</span>
+            </div>
+            <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Random Forest</li></ul>
+          </li>
+
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="blog/hague-energy-labels.html">The Hague energy labels</a></h3>
+              <p>How energy efficiency is distributed across The Hague's housing stock.</p>
+              <span class="read-more" aria-hidden="true">Read the write-up</span>
+            </div>
+            <ul class="tags"><li>Python</li><li>Open data</li></ul>
+          </li>
+
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="blog/education-spending.html">Education access vs. national spending</a></h3>
+              <p>TU Delft case study using World Bank indicators to compare out-of-school rates with GDP and education spending.</p>
+              <span class="read-more" aria-hidden="true">Read the write-up</span>
+            </div>
+            <ul class="tags"><li>Python</li><li>World Bank WDI</li></ul>
+          </li>
+        </ul>
       </div>
     </section>
 
@@ -151,11 +129,11 @@
     <section id="contact" class="section contact">
       <div class="wrap">
         <h2>Get in touch</h2>
-        <p class="section-intro">Hiring, or have a data problem? Email is the quickest way to reach me.</p>
-        <!-- Replace the placeholder links below with your own -->
+        <p class="section-intro">Email is the quickest way to reach me.</p>
+        <!-- Replace the GitHub and Kaggle links with your own -->
         <ul class="contact-links">
-          <li><a href="mailto:you@example.com">you@example.com</a></li>
-          <li><a href="https://www.linkedin.com/in/your-profile">LinkedIn</a></li>
+          <li><a href="mailto:m.deligrozev@gmail.com">m.deligrozev@gmail.com</a></li>
+          <li><a href="https://www.linkedin.com/in/mihail-deligrozev/">LinkedIn</a></li>
           <li><a href="https://github.com/yourusername">GitHub</a></li>
           <li><a href="https://www.kaggle.com/yourusername">Kaggle</a></li>
         </ul>
