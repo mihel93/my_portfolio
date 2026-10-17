@@ -1,0 +1,99 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Blog | Mihail Deligrozev</title>
+  <meta name="description" content="Project write-ups by Mihail Deligrozev, data analyst.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../index.html">m.deligrozev</a>
+      <nav aria-label="Main">
+        <a href="../index.html#work">Work</a>
+        <a href="./" aria-current="page">Blog</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-head">
+      <div class="wrap">
+        <h1>Blog</h1>
+        <p class="section-intro">Write-ups of my projects: the question, the data, how I approached it and what I found.</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="wrap">
+        <ul class="projects">
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="dutch-housing.html">Dutch housing market price trends</a></h3>
+              <p>How house prices have moved across Dutch regions, using data pulled straight from the CBS StatLine API and mapped by municipality.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>pandas</li><li>geopandas</li><li>CBS API</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="sofia-transport.html">Sofia public transport network</a></h3>
+              <p>A Power BI data model built on Sofia&#x27;s GTFS feed, with DAX measures for routes, stops and service frequency.</p>
+            </div>
+            <ul class="tags"><li>Power BI</li><li>DAX</li><li>GTFS</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="steam-games.html">What makes a Steam game succeed?</a></h3>
+              <p>Defining and testing success indicators on a large Steam games dataset, then building a model to predict them.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>Modelling</li><li>Kaggle</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="hague-airbnb.html">The Hague Airbnb market</a></h3>
+              <p>Exploratory and geospatial analysis of Airbnb listings in The Hague: where they are, what they cost, and why.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>seaborn</li><li>Geospatial</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="hague-energy-labels.html">The Hague energy labels</a></h3>
+              <p>How energy efficiency is distributed across The Hague&#x27;s housing stock.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>Open data</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="hr-attrition.html">Employee attrition drivers</a></h3>
+              <p>Statistical segmentation and a Random Forest model on the IBM HR dataset to find who leaves and why.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>scikit-learn</li><li>Random Forest</li></ul>
+          </li>
+          <li class="project">
+            <div class="project-main">
+              <h3><a href="education-spending.html">Education access vs. national spending</a></h3>
+              <p>A TU Delft case study using World Bank indicators to compare out-of-school rates with GDP and education spending.</p>
+            </div>
+            <ul class="tags"><li>Python</li><li>World Bank WDI</li></ul>
+          </li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Mihail Deligrozev</p>
+    </div>
+  </footer>
+
+</body>
+</html>

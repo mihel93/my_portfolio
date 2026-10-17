@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sofia public transport network | Mihail Deligrozev</title>
+  <meta name="description" content="A Power BI data model built on Sofia&#x27;s GTFS feed, with DAX measures for routes, stops and service frequency.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../index.html">m.deligrozev</a>
+      <nav aria-label="Main">
+        <a href="../index.html#work">Work</a>
+        <a href="./">Blog</a>
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <article class="wrap">
+      <div class="post-body">
+        <a class="back" href="./">All posts</a>
+
+        <h1>Sofia public transport network</h1>
+        <p class="post-lead">A Power BI data model built on Sofia&#x27;s GTFS feed, with DAX measures for routes, stops and service frequency.</p>
+        <ul class="tags"><li>Power BI</li><li>DAX</li><li>GTFS</li></ul>
+
+        <dl class="facts" aria-label="Project facts">
+          <div><dt>Data</dt><dd>Sofia public transport GTFS feed</dd></div>
+          <div><dt>Tools</dt><dd>Power BI, DAX</dd></div>
+          <div><dt>Type</dt><dd>Personal project</dd></div>
+        </dl>
+
+        <h2>The question</h2>
+        <p>How well is Sofia covered by public transport, and where is service frequent or thin?</p>
+        <p><span class="todo">TODO: why this question matters, and who would use the answer.</span></p>
+
+        <h2>The data</h2>
+        <p>GTFS is the standard format transit agencies use to publish schedules: separate tables for routes, trips, stops and stop times that need to be modelled together.</p>
+        <p><span class="todo">TODO: size of the dataset, time period, and any cleaning problems you had to solve.</span></p>
+
+        <h2>Approach</h2>
+        <ul>
+          <li>Load the GTFS tables into Power BI</li>
+          <li>Build a star-schema data model linking routes, trips, stops and stop times</li>
+          <li>Write DAX measures for route counts, stop coverage and service frequency</li>
+          <li>Design report pages for exploring the network</li>
+        </ul>
+
+        <!-- Replace the placeholder with a real chart: save it as images/sofia-transport-1.png
+        <figure>
+          <img src="../images/sofia-transport-1.png" alt="Describe what the chart shows">
+          <figcaption>Short caption explaining the chart.</figcaption>
+        </figure>
+        -->
+        <figure>
+          <div class="img-placeholder">Chart goes here: images/sofia-transport-1.png</div>
+        </figure>
+
+        <h2>What I found</h2>
+        <p><span class="todo">TODO: your 2–4 key findings, with the numbers behind them.</span></p>
+
+        <h2>What I'd do next</h2>
+        <p><span class="todo">TODO: limitations of the analysis and how you'd extend it.</span></p>
+
+        <div class="post-links">
+          <!-- Replace # with the link to the notebook, repo or report -->
+          <a class="btn btn-primary" href="#">View the notebook</a>
+          <a class="btn btn-ghost" href="#">Code on GitHub</a>
+        </div>
+
+        <nav class="post-nav" aria-label="More posts">
+          <a class="prev" href="dutch-housing.html">Previous: Dutch housing market price trends</a><a class="next" href="steam-games.html">Next: What makes a Steam game succeed?</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Mihail Deligrozev</p>
+    </div>
+  </footer>
+
+</body>
+</html>
