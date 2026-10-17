@@ -481,8 +481,11 @@ a { color: var(--delft); }
     "d1 d5   d2"
     "d3 fact d4"
     ".  d6   .";
-  gap: 64px 72px;
-  margin-top: 36px;
+  gap: 48px 60px;
+  margin-top: 32px;
+  max-width: 960px;
+  margin-left: auto;
+  margin-right: auto;
   align-items: center;
 }
 
@@ -512,11 +515,11 @@ a { color: var(--delft); }
   border: 1.5px solid var(--ink);
   border-radius: 4px;
   box-shadow: 3px 3px 0 var(--rule);
-  font-size: 0.9rem;
+  font-size: 0.82rem;
 }
 
 .st-table header {
-  padding: 8px 12px;
+  padding: 6px 10px;
   border-bottom: 1.5px solid var(--ink);
   background: var(--paper);
 }
@@ -524,21 +527,21 @@ a { color: var(--delft); }
   display: block;
   font-family: var(--mono);
   font-weight: 600;
-  font-size: 0.85rem;
+  font-size: 0.78rem;
 }
 .st-title {
   display: block;
-  font-size: 0.8rem;
+  font-size: 0.74rem;
   color: var(--muted);
 }
 
 .st-table ul {
   list-style: none;
   margin: 0;
-  padding: 6px 0;
+  padding: 4px 0;
 }
 .st-table li {
-  padding: 3px 12px 3px 30px;
+  padding: 2px 10px 2px 26px;
   position: relative;
   line-height: 1.35;
 }
@@ -546,7 +549,7 @@ a { color: var(--delft); }
 .st-table li::before {
   content: "";
   position: absolute;
-  left: 12px; top: 0.6em;
+  left: 10px; top: 0.55em;
   width: 9px; height: 7px;
   border: 1.5px solid var(--muted);
   border-radius: 1px;
@@ -557,7 +560,7 @@ a { color: var(--delft); }
 .st-fact header { background: var(--delft); border-bottom-color: var(--delft); }
 .st-fact .st-name,
 .st-fact .st-title { color: #fff; }
-.st-fk { font-family: var(--mono); font-size: 0.82rem; color: var(--delft); }
+.st-fk { font-family: var(--mono); font-size: 0.76rem; color: var(--delft); }
 .st-fact li:has(.st-fk)::before { border-color: var(--delft); border-radius: 50%; width: 8px; height: 8px; }
 
 @media (max-width: 900px) {
@@ -877,7 +880,7 @@ a { color: var(--delft); }
 .st-table li:focus-visible {
   background: var(--delft-tint);
   color: var(--delft);
-  padding-left: 34px;
+  padding-left: 30px;
   outline: none;
 }
 .st-table li:hover::before,
