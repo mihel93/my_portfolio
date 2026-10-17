@@ -238,11 +238,35 @@ a { color: var(--delft); }
 }
 
 .project {
+  position: relative;          /* lets the title link cover the whole row */
   display: grid;
   grid-template-columns: 1fr 260px;
   gap: 24px;
-  padding: 24px 0;
+  padding: 24px 16px;
+  margin: 0 -16px;
   border-bottom: 1px solid var(--rule);
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.project:hover,
+.project:focus-within {
+  background: var(--surface);
+}
+
+/* Stretch the title link over the full row so the whole project is clickable */
+.project h3 a::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+}
+
+.project .read-more {
+  display: inline-block;
+  margin-top: 12px;
+  font-family: var(--mono);
+  font-size: 0.85rem;
+  color: var(--delft);
 }
 
 .project h3 {
@@ -258,7 +282,7 @@ a { color: var(--delft); }
   background-repeat: no-repeat;
   transition: background-size 0.2s ease;
 }
-.project h3 a:hover,
+.project:hover h3 a,
 .project h3 a:focus-visible {
   color: var(--delft);
   background-size: 100% 2px;
