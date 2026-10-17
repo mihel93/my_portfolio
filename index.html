@@ -61,6 +61,37 @@
             in economics and finance. That mix shapes how I work: rigorous with the
             numbers, and focused on the decision the analysis is meant to support.
           </p>
+
+          <!-- Career as a Gantt chart. Bars are placed with --s (start) and --e (end) in years. -->
+          <figure class="gantt" aria-label="Career timeline">
+            <ul class="gantt-legend">
+              <li class="k-edu">Education</li>
+              <li class="k-eng">Engineering</li>
+              <li class="k-data">Data</li>
+            </ul>
+            <ol class="gantt-rows">
+              <li class="k-edu" style="--s:2012.7; --e:2017.5">
+                <span class="g-label">MSc Structural Engineering, UACEG Sofia <span class="g-years">2012–2017</span></span>
+                <span class="g-track"><span class="g-bar"></span></span>
+              </li>
+              <li class="k-eng" style="--s:2017.5; --e:2020.55">
+                <span class="g-label">Engineer at ICIOM and REQUESTA, Sofia <span class="g-years">2017–2020</span></span>
+                <span class="g-track"><span class="g-bar"></span></span>
+              </li>
+              <li class="k-edu" style="--s:2020.7; --e:2022.7">
+                <span class="g-label">MSc Engineering &amp; Policy Analysis, TU Delft <span class="g-years">2020–2022</span></span>
+                <span class="g-track"><span class="g-bar"></span></span>
+              </li>
+              <li class="k-data g-ongoing" style="--s:2023.9; --e:2026.8">
+                <span class="g-label">Freelance data analyst <span class="g-years">2023–now</span></span>
+                <span class="g-track"><span class="g-bar"></span><span class="g-mark" style="--m:2025.45" title="PL-300 certified, June 2025"></span></span>
+              </li>
+            </ol>
+            <div class="gantt-axis" aria-hidden="true">
+              <span style="--y:2013">2013</span><span style="--y:2016">2016</span><span style="--y:2019">2019</span><span style="--y:2022">2022</span><span style="--y:2025">2025</span>
+            </div>
+            <figcaption>The diamond marks my Microsoft PL-300 Power BI certification, June 2025.</figcaption>
+          </figure>
         </div>
       </div>
     </section>
@@ -69,13 +100,27 @@
     <section id="skills" class="section section-alt">
       <div class="wrap">
         <h2>Skills</h2>
-        <dl class="spec skills" aria-label="Technical skills">
-          <div><dt>Power BI &amp; data modeling</dt><dd>Dashboard design, slicers, drilldowns, bookmarks, DAX measures &amp; KPIs, Power Query / ETL, Azure Data Factory, star schema / data modeling</dd></div>
-          <div><dt>Data analysis &amp; modeling</dt><dd>Python (pandas, NumPy), SQL, trend analysis, statistical modeling, cohort analysis, predictive / LTV analysis</dd></div>
-          <div><dt>Data integration</dt><dd>SQL, Excel, APIs, Google Analytics, Firebase Analytics, App Store Connect, Google Play Console</dd></div>
-          <div><dt>Visualization &amp; reporting</dt><dd>Dash, Plotly, Matplotlib, Seaborn, automated reporting, performance dashboards</dd></div>
-          <div><dt>Tools &amp; collaboration</dt><dd>Git, GitHub, Jira, Trello, Slack, Excel (pivot tables, advanced formulas)</dd></div>
-        </dl>
+        <p class="section-intro">The skills from my CV, and where I've used them. A filled cell means the project used that skill.</p>
+        <div class="heat-wrap">
+          <table class="heatmap">
+            <thead>
+              <tr><td></td><th scope="col"><a href="blog/steam-games.html">Steam</a></th><th scope="col"><a href="blog/hr-attrition.html">HR</a></th><th scope="col"><a href="blog/hague-energy-labels.html">The Hague</a></th><th scope="col"><a href="blog/education-spending.html">World Bank</a></th><th scope="col">Client work</th></tr>
+            </thead>
+            <tbody>
+              <tr><th scope="row">Python (pandas, NumPy)</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">SQL</th><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
+              <tr><th scope="row">Statistical modeling</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
+              <tr><th scope="row">Predictive / LTV analysis</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">Cohort analysis</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">Data modeling (relational, star schema)</th><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">Power BI, DAX, Power Query / ETL</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">APIs &amp; data integration</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+              <tr><th scope="row">Matplotlib &amp; Seaborn</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
+              <tr><th scope="row">Automated reporting &amp; dashboards</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="heat-also">Also: Excel (pivot tables, advanced formulas), Azure Data Factory, Google Analytics, Firebase Analytics, App Store Connect, Google Play Console, Dash, Plotly, Git, GitHub, Jira, Trello, Slack.</p>
       </div>
     </section>
 
@@ -87,6 +132,7 @@
 
         <ul class="projects">
           <li class="project">
+            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Lorenz curve: a few games get most reviews"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-fill" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4 V72 Z"/><path class="t-line" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/steam-games.html">What makes a Steam game successful?</a></h3>
               <p>Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.</p>
@@ -96,6 +142,7 @@
           </li>
 
           <li class="project">
+            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="ROC curve of the attrition model"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-line" d="M8 72 L12 52 L20 36 L32 25 L48 17 L70 10 L92 6 L116 4"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/hr-attrition.html">Employee attrition: who leaves, and what would keep them</a></h3>
               <p>From raw HR data to a retention strategy: segmentation, statistical tests, a predictive model and a business case with explicit assumptions.</p>
@@ -105,6 +152,7 @@
           </li>
 
           <li class="project">
+            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Energy label mix per neighbourhood, best to worst"><path class="t-axis" d="M8 4 V72 H116"/><rect x="12" y="15.9" width="8" height="56.1" fill="#1a9641"/><rect x="12" y="9.3" width="8" height="6.6" fill="#a6d96a"/><rect x="12" y="7.3" width="8" height="2.0" fill="#ffff8c"/><rect x="12" y="6.7" width="8" height="0.7" fill="#fdae61"/><rect x="12" y="6.0" width="8" height="0.7" fill="#f46d43"/><rect x="22.4" y="25.8" width="8" height="46.2" fill="#1a9641"/><rect x="22.4" y="12.6" width="8" height="13.2" fill="#a6d96a"/><rect x="22.4" y="9.3" width="8" height="3.3" fill="#ffff8c"/><rect x="22.4" y="7.3" width="8" height="2.0" fill="#fdae61"/><rect x="22.4" y="6.0" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="45.6" width="8" height="26.4" fill="#1a9641"/><rect x="32.8" y="15.9" width="8" height="29.7" fill="#a6d96a"/><rect x="32.8" y="10.6" width="8" height="5.3" fill="#ffff8c"/><rect x="32.8" y="8.0" width="8" height="2.6" fill="#fdae61"/><rect x="32.8" y="6.7" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="6.0" width="8" height="0.7" fill="#d73027"/><rect x="43.199999999999996" y="60.1" width="8" height="11.9" fill="#1a9641"/><rect x="43.199999999999996" y="46.9" width="8" height="13.2" fill="#a6d96a"/><rect x="43.199999999999996" y="30.4" width="8" height="16.5" fill="#ffff8c"/><rect x="43.199999999999996" y="20.5" width="8" height="9.9" fill="#fdae61"/><rect x="43.199999999999996" y="12.6" width="8" height="7.9" fill="#f46d43"/><rect x="43.199999999999996" y="8.6" width="8" height="4.0" fill="#d73027"/><rect x="43.199999999999996" y="6.0" width="8" height="2.6" fill="#a50026"/><rect x="53.599999999999994" y="65.4" width="8" height="6.6" fill="#1a9641"/><rect x="53.599999999999994" y="56.2" width="8" height="9.2" fill="#a6d96a"/><rect x="53.599999999999994" y="41.6" width="8" height="14.5" fill="#ffff8c"/><rect x="53.599999999999994" y="29.8" width="8" height="11.9" fill="#fdae61"/><rect x="53.599999999999994" y="19.2" width="8" height="10.6" fill="#f46d43"/><rect x="53.599999999999994" y="12.6" width="8" height="6.6" fill="#d73027"/><rect x="53.599999999999994" y="6.0" width="8" height="6.6" fill="#a50026"/><rect x="63.99999999999999" y="68.0" width="8" height="4.0" fill="#1a9641"/><rect x="63.99999999999999" y="61.4" width="8" height="6.6" fill="#a6d96a"/><rect x="63.99999999999999" y="49.6" width="8" height="11.9" fill="#ffff8c"/><rect x="63.99999999999999" y="36.4" width="8" height="13.2" fill="#fdae61"/><rect x="63.99999999999999" y="23.2" width="8" height="13.2" fill="#f46d43"/><rect x="63.99999999999999" y="15.2" width="8" height="7.9" fill="#d73027"/><rect x="63.99999999999999" y="6.0" width="8" height="9.2" fill="#a50026"/><rect x="74.39999999999999" y="68.7" width="8" height="3.3" fill="#1a9641"/><rect x="74.39999999999999" y="63.4" width="8" height="5.3" fill="#a6d96a"/><rect x="74.39999999999999" y="54.2" width="8" height="9.2" fill="#ffff8c"/><rect x="74.39999999999999" y="43.6" width="8" height="10.6" fill="#fdae61"/><rect x="74.39999999999999" y="29.1" width="8" height="14.5" fill="#f46d43"/><rect x="74.39999999999999" y="19.2" width="8" height="9.9" fill="#d73027"/><rect x="74.39999999999999" y="6.0" width="8" height="13.2" fill="#a50026"/><rect x="84.8" y="70.0" width="8" height="2.0" fill="#1a9641"/><rect x="84.8" y="66.1" width="8" height="4.0" fill="#a6d96a"/><rect x="84.8" y="59.5" width="8" height="6.6" fill="#ffff8c"/><rect x="84.8" y="50.2" width="8" height="9.2" fill="#fdae61"/><rect x="84.8" y="37.0" width="8" height="13.2" fill="#f46d43"/><rect x="84.8" y="25.8" width="8" height="11.2" fill="#d73027"/><rect x="84.8" y="6.0" width="8" height="19.8" fill="#a50026"/><rect x="95.2" y="70.7" width="8" height="1.3" fill="#1a9641"/><rect x="95.2" y="68.0" width="8" height="2.6" fill="#a6d96a"/><rect x="95.2" y="62.8" width="8" height="5.3" fill="#ffff8c"/><rect x="95.2" y="56.2" width="8" height="6.6" fill="#fdae61"/><rect x="95.2" y="44.3" width="8" height="11.9" fill="#f46d43"/><rect x="95.2" y="32.4" width="8" height="11.9" fill="#d73027"/><rect x="95.2" y="6.0" width="8" height="26.4" fill="#a50026"/><rect x="105.60000000000001" y="71.3" width="8" height="0.7" fill="#1a9641"/><rect x="105.60000000000001" y="69.4" width="8" height="2.0" fill="#a6d96a"/><rect x="105.60000000000001" y="65.4" width="8" height="4.0" fill="#ffff8c"/><rect x="105.60000000000001" y="60.1" width="8" height="5.3" fill="#fdae61"/><rect x="105.60000000000001" y="50.9" width="8" height="9.2" fill="#f46d43"/><rect x="105.60000000000001" y="37.7" width="8" height="13.2" fill="#d73027"/><rect x="105.60000000000001" y="6.0" width="8" height="31.7" fill="#a50026"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/hague-energy-labels.html">Do richer neighbourhoods live in greener homes?</a></h3>
               <p>Household income, energy labels and neighbourhood types across the 114 neighbourhoods of The Hague, with spatial statistics and K-means clustering.</p>
@@ -114,6 +162,7 @@
           </li>
 
           <li class="project">
+            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Out-of-school rate falling with national wealth"><path class="t-axis" d="M8 4 V72 H116"/><g class="t-dots"><circle cx="12.0" cy="39.1" r="1.6"/><circle cx="15.1" cy="21.5" r="1.6"/><circle cx="18.2" cy="31.5" r="1.6"/><circle cx="21.3" cy="18.0" r="1.6"/><circle cx="24.4" cy="16.8" r="1.6"/><circle cx="27.5" cy="49.0" r="1.6"/><circle cx="30.6" cy="52.0" r="1.6"/><circle cx="33.7" cy="6.0" r="1.6"/><circle cx="36.8" cy="37.9" r="1.6"/><circle cx="39.9" cy="39.3" r="1.6"/><circle cx="43.0" cy="6.0" r="1.6"/><circle cx="46.1" cy="27.6" r="1.6"/><circle cx="49.2" cy="15.0" r="1.6"/><circle cx="52.3" cy="37.8" r="1.6"/><circle cx="55.4" cy="37.3" r="1.6"/><circle cx="58.5" cy="57.9" r="1.6"/><circle cx="61.6" cy="50.2" r="1.6"/><circle cx="64.7" cy="54.0" r="1.6"/><circle cx="67.8" cy="59.6" r="1.6"/><circle cx="70.9" cy="57.0" r="1.6"/><circle cx="74.0" cy="58.4" r="1.6"/><circle cx="77.1" cy="66.8" r="1.6"/><circle cx="80.2" cy="58.3" r="1.6"/><circle cx="83.3" cy="60.8" r="1.6"/><circle cx="86.4" cy="64.6" r="1.6"/><circle cx="89.5" cy="67.9" r="1.6"/><circle cx="92.6" cy="59.2" r="1.6"/><circle cx="95.7" cy="63.8" r="1.6"/><circle cx="98.8" cy="61.8" r="1.6"/><circle cx="101.9" cy="60.8" r="1.6"/><circle cx="105.0" cy="62.8" r="1.6"/><circle cx="108.1" cy="61.6" r="1.6"/><circle cx="111.2" cy="66.3" r="1.6"/><circle cx="114.3" cy="63.7" r="1.6"/></g><path class="t-line" d="M10 22 H44 L50 36 L58 54 L66 64 H116"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/education-spending.html">Do richer countries keep more children in school?</a></h3>
               <p>Wealth, public spending and out-of-school rates across 217 economies, 2000–2025, using World Bank development indicators.</p>
@@ -137,6 +186,22 @@
           <li><a href="https://github.com/yourusername">GitHub</a></li>
           <li><a href="https://www.kaggle.com/yourusername">Kaggle</a></li>
         </ul>
+
+        <!-- Playful touch: a trend line that turns into a forecast -->
+        <figure class="forecast" aria-label="A trend line that continues as a dashed forecast towards your team in 2027">
+          <svg viewBox="0 -24 1000 194" preserveAspectRatio="xMidYMid meet">
+            <line class="f-base" x1="20" y1="140" x2="980" y2="140"/>
+            <path class="f-solid" d="M20 128 L90 122 L160 125 L230 112 L300 115 L370 100 L440 94 L510 98 L580 80 L650 74 L720 60"/>
+            <path class="f-band" d="M720 60 L940 18 L940 58 Z"/>
+            <path class="f-dash" d="M720 60 L940 38"/>
+            <circle class="f-now" cx="720" cy="60" r="7"/>
+            <circle class="f-end" cx="940" cy="38" r="9"/>
+            <text class="f-tick" x="20" y="163">2017</text>
+            <text class="f-tick" x="720" y="163" text-anchor="middle">now</text>
+            <text class="f-tick" x="940" y="163" text-anchor="middle">2027</text>
+            <text class="f-label" x="960" y="0" text-anchor="end">Your team, 2027</text>
+          </svg>
+        </figure>
       </div>
     </section>
 
