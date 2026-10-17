@@ -44,8 +44,19 @@
           </div>
         </div>
 
-        <figure class="portrait">
-          <img src="images/mihail.jpg" alt="Portrait of Mihail Deligrozev" width="640" height="800">
+        <figure class="scatter" aria-label="Scatter plot with my photo as the outlier: high on both engineering and data">
+          <svg class="sc-plot" viewBox="0 0 400 400" aria-hidden="true">
+            <path class="sc-axis" d="M44 14 V356 H394"/>
+            <g class="sc-ticks"><path d="M44 270 h-6 M44 185 h-6 M44 100 h-6 M130 356 v6 M215 356 v6 M300 356 v6"/></g>
+            <g class="sc-dots"><circle cx="84" cy="290" r="6"/><circle cx="62" cy="298" r="5"/><circle cx="155" cy="319" r="5"/><circle cx="165" cy="294" r="4"/><circle cx="62" cy="255" r="4"/><circle cx="100" cy="252" r="6"/><circle cx="102" cy="229" r="5"/><circle cx="78" cy="222" r="4"/><circle cx="160" cy="284" r="5"/><circle cx="76" cy="234" r="5"/><circle cx="62" cy="303" r="5"/><circle cx="104" cy="239" r="4"/><circle cx="102" cy="284" r="4"/><circle cx="125" cy="241" r="5"/><circle cx="125" cy="274" r="4"/><circle cx="69" cy="320" r="6"/><circle cx="142" cy="278" r="4"/><circle cx="157" cy="342" r="4"/><circle cx="62" cy="296" r="6"/><circle cx="87" cy="300" r="5"/><circle cx="141" cy="244" r="4"/><circle cx="132" cy="281" r="6"/><circle cx="136" cy="255" r="5"/><circle cx="133" cy="269" r="6"/><circle cx="143" cy="251" r="5"/><circle cx="109" cy="283" r="5"/><circle cx="99" cy="294" r="6"/><circle cx="109" cy="288" r="5"/><circle cx="210" cy="193" r="5"/><circle cx="143" cy="275" r="5"/><circle cx="70" cy="323" r="4"/><circle cx="158" cy="281" r="6"/><circle cx="131" cy="342" r="5"/><circle cx="155" cy="240" r="4"/><circle cx="182" cy="303" r="5"/><circle cx="175" cy="279" r="6"/><circle cx="174" cy="313" r="5"/><circle cx="153" cy="256" r="5"/><circle cx="124" cy="302" r="5"/><circle cx="131" cy="252" r="5"/><circle cx="119" cy="238" r="6"/><circle cx="100" cy="250" r="4"/><circle cx="174" cy="305" r="5"/><circle cx="140" cy="337" r="5"/><circle cx="62" cy="316" r="6"/><circle cx="128" cy="299" r="4"/></g>
+            <path class="sc-leader" d="M212 100 H160"/>
+            <text class="sc-note" x="154" y="105" text-anchor="end">the outlier</text>
+            <text class="sc-axis-label" x="394" y="384" text-anchor="end">Engineering</text>
+            <text class="sc-axis-label" x="-14" y="22" transform="rotate(-90 22 22)" text-anchor="end">Data</text>
+          </svg>
+          <div class="sc-point" tabindex="0" data-tip="Me: an engineer by training and an analyst by trade">
+            <img src="images/mihail.jpg" alt="Portrait of Mihail Deligrozev" width="640" height="800">
+          </div>
         </figure>
       </div>
     </section>
@@ -70,21 +81,21 @@
               <li class="k-data">Data</li>
             </ul>
             <ol class="gantt-rows">
-              <li class="k-edu" style="--s:2012.7; --e:2017.5">
+              <li tabindex="0" data-tip="UACEG Sofia, Sep 2012 – Jul 2017" class="k-edu" style="--s:2012.7; --e:2017.5">
                 <span class="g-label">MSc Structural Engineering, UACEG Sofia <span class="g-years">2012–2017</span></span>
                 <span class="g-track"><span class="g-bar"></span></span>
               </li>
-              <li class="k-eng" style="--s:2017.5; --e:2020.55">
+              <li tabindex="0" data-tip="Jr Project Engineer at ICIOM (2017–2019), then Civil Engineer at REQUESTA (2020)" class="k-eng" style="--s:2017.5; --e:2020.55">
                 <span class="g-label">Engineer at ICIOM and REQUESTA, Sofia <span class="g-years">2017–2020</span></span>
                 <span class="g-track"><span class="g-bar"></span></span>
               </li>
-              <li class="k-edu" style="--s:2020.7; --e:2022.7">
+              <li tabindex="0" data-tip="TU Delft, Sep 2020 – Sep 2022: economics, finance and decision-making theory" class="k-edu" style="--s:2020.7; --e:2022.7">
                 <span class="g-label">MSc Engineering &amp; Policy Analysis, TU Delft <span class="g-years">2020–2022</span></span>
                 <span class="g-track"><span class="g-bar"></span></span>
               </li>
-              <li class="k-data g-ongoing" style="--s:2023.9; --e:2026.8">
+              <li tabindex="0" data-tip="Dec 2023 – now: CARDE.IO, Arendoo, Able and Cyborg Games" class="k-data g-ongoing" style="--s:2023.9; --e:2026.8">
                 <span class="g-label">Freelance data analyst <span class="g-years">2023–now</span></span>
-                <span class="g-track"><span class="g-bar"></span><span class="g-mark" style="--m:2025.45" title="PL-300 certified, June 2025"></span></span>
+                <span class="g-track"><span class="g-bar"></span><span class="g-mark" style="--m:2025.45" tabindex="0" data-tip="Microsoft Certified: Power BI Data Analyst Associate (PL-300), June 2025"></span></span>
               </li>
             </ol>
             <div class="gantt-axis" aria-hidden="true">
@@ -100,27 +111,38 @@
     <section id="skills" class="section section-alt">
       <div class="wrap">
         <h2>Skills</h2>
-        <p class="section-intro">The skills from my CV, and where I've used them. A filled cell means the project used that skill.</p>
-        <div class="heat-wrap">
-          <table class="heatmap">
-            <thead>
-              <tr><td></td><th scope="col"><a href="blog/steam-games.html">Steam</a></th><th scope="col"><a href="blog/hr-attrition.html">HR</a></th><th scope="col"><a href="blog/hague-energy-labels.html">The Hague</a></th><th scope="col"><a href="blog/education-spending.html">World Bank</a></th><th scope="col">Client work</th></tr>
-            </thead>
-            <tbody>
-              <tr><th scope="row">Python (pandas, NumPy)</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">SQL</th><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
-              <tr><th scope="row">Statistical modeling</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
-              <tr><th scope="row">Predictive / LTV analysis</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">Cohort analysis</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">Data modeling (relational, star schema)</th><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">Power BI, DAX, Power Query / ETL</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">APIs &amp; data integration</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-              <tr><th scope="row">Matplotlib &amp; Seaborn</th><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="on"><span class="sr-only">Used</span></td><td class="off"><span class="sr-only">Not used</span></td></tr>
-              <tr><th scope="row">Automated reporting &amp; dashboards</th><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="off"><span class="sr-only">Not used</span></td><td class="on"><span class="sr-only">Used</span></td></tr>
-            </tbody>
-          </table>
+        <p class="section-intro">My skills from my CV, modelled the way I'd model data in Power BI: one fact table, six dimensions. Hover over a table to see its relationship.</p>
+        <div class="star" aria-label="Skills shown as a star schema">
+          <section class="st-table st-fact-pos st-fact" data-key="fact_mihail" tabindex="0" data-tip="Fact table: one row for me, linked to all six skill dimensions">
+            <header><span class="st-name">fact_mihail</span><span class="st-title">Mihail Deligrozev</span></header>
+            <ul><li><span class="st-fk">power_bi_id</span></li><li><span class="st-fk">analysis_id</span></li><li><span class="st-fk">integration_id</span></li><li><span class="st-fk">visualization_id</span></li><li><span class="st-fk">tools_id</span></li><li><span class="st-fk">soft_skills_id</span></li><li>role: Data analyst</li><li>certified: PL-300 (2025)</li></ul>
+          </section>
+          <section class="st-table d1" data-key="dim_power_bi" tabindex="0" data-tip="6 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_power_bi</span><span class="st-title">Power BI &amp; data modeling</span></header>
+            <ul><li>Dashboard design</li><li>Slicers, drilldowns, bookmarks</li><li>DAX measures &amp; KPIs</li><li>Power Query / ETL</li><li>Azure Data Factory</li><li>Star schema / data modeling</li></ul>
+          </section>
+          <section class="st-table d2" data-key="dim_analysis" tabindex="0" data-tip="6 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_analysis</span><span class="st-title">Data analysis &amp; modeling</span></header>
+            <ul><li>Python (pandas, NumPy)</li><li>SQL</li><li>Trend analysis</li><li>Statistical modeling</li><li>Cohort analysis</li><li>Predictive / LTV analysis</li></ul>
+          </section>
+          <section class="st-table d3" data-key="dim_integration" tabindex="0" data-tip="7 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_integration</span><span class="st-title">Data integration</span></header>
+            <ul><li>SQL</li><li>Excel</li><li>APIs</li><li>Google Analytics</li><li>Firebase Analytics</li><li>App Store Connect</li><li>Google Play Console</li></ul>
+          </section>
+          <section class="st-table d4" data-key="dim_visualization" tabindex="0" data-tip="6 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_visualization</span><span class="st-title">Visualization &amp; reporting</span></header>
+            <ul><li>Dash</li><li>Plotly</li><li>Matplotlib</li><li>Seaborn</li><li>Automated reporting</li><li>Performance dashboards</li></ul>
+          </section>
+          <section class="st-table d5" data-key="dim_tools" tabindex="0" data-tip="4 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_tools</span><span class="st-title">Tools &amp; collaboration</span></header>
+            <ul><li>Git, GitHub</li><li>Jira, Trello</li><li>Slack</li><li>Excel (pivot tables, advanced formulas)</li></ul>
+          </section>
+          <section class="st-table d6" data-key="dim_soft_skills" tabindex="0" data-tip="6 skills, linked one-to-many to fact_mihail">
+            <header><span class="st-name">dim_soft_skills</span><span class="st-title">Soft skills</span></header>
+            <ul><li>Analytical storytelling</li><li>Structured decision-making</li><li>System-level thinking</li><li>Project management &amp; coordination</li><li>Quality control</li><li>English (bilingual), Bulgarian (native), Dutch (B2)</li></ul>
+          </section>
+          <svg class="st-lines" aria-hidden="true"></svg>
         </div>
-        <p class="heat-also">Also: Excel (pivot tables, advanced formulas), Azure Data Factory, Google Analytics, Firebase Analytics, App Store Connect, Google Play Console, Dash, Plotly, Git, GitHub, Jira, Trello, Slack.</p>
       </div>
     </section>
 
@@ -132,7 +154,7 @@
 
         <ul class="projects">
           <li class="project">
-            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Lorenz curve: a few games get most reviews"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-fill" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4 V72 Z"/><path class="t-line" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4"/></svg></figure>
+            <figure class="thumb" data-tip="Lorenz curve: the top 1% of games hold 80% of all reviews"><svg viewBox="0 0 120 80" role="img" aria-label="Lorenz curve: a few games get most reviews"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-fill" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4 V72 Z"/><path class="t-line" pathLength="1" d="M8 72 L9.5 18 L14 11 L24 7 L50 5 L116 4"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/steam-games.html">What makes a Steam game successful?</a></h3>
               <p>Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.</p>
@@ -142,7 +164,7 @@
           </li>
 
           <li class="project">
-            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="ROC curve of the attrition model"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-line" d="M8 72 L12 52 L20 36 L32 25 L48 17 L70 10 L92 6 L116 4"/></svg></figure>
+            <figure class="thumb" data-tip="ROC curve: the logistic regression reaches AUC 0.82"><svg viewBox="0 0 120 80" role="img" aria-label="ROC curve of the attrition model"><path class="t-axis" d="M8 4 V72 H116"/><path class="t-ref" d="M8 72 L116 4"/><path class="t-line" pathLength="1" d="M8 72 L12 52 L20 36 L32 25 L48 17 L70 10 L92 6 L116 4"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/hr-attrition.html">Employee attrition: who leaves, and what would keep them</a></h3>
               <p>From raw HR data to a retention strategy: segmentation, statistical tests, a predictive model and a business case with explicit assumptions.</p>
@@ -152,7 +174,7 @@
           </li>
 
           <li class="project">
-            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Energy label mix per neighbourhood, best to worst"><path class="t-axis" d="M8 4 V72 H116"/><rect x="12" y="15.9" width="8" height="56.1" fill="#1a9641"/><rect x="12" y="9.3" width="8" height="6.6" fill="#a6d96a"/><rect x="12" y="7.3" width="8" height="2.0" fill="#ffff8c"/><rect x="12" y="6.7" width="8" height="0.7" fill="#fdae61"/><rect x="12" y="6.0" width="8" height="0.7" fill="#f46d43"/><rect x="22.4" y="25.8" width="8" height="46.2" fill="#1a9641"/><rect x="22.4" y="12.6" width="8" height="13.2" fill="#a6d96a"/><rect x="22.4" y="9.3" width="8" height="3.3" fill="#ffff8c"/><rect x="22.4" y="7.3" width="8" height="2.0" fill="#fdae61"/><rect x="22.4" y="6.0" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="45.6" width="8" height="26.4" fill="#1a9641"/><rect x="32.8" y="15.9" width="8" height="29.7" fill="#a6d96a"/><rect x="32.8" y="10.6" width="8" height="5.3" fill="#ffff8c"/><rect x="32.8" y="8.0" width="8" height="2.6" fill="#fdae61"/><rect x="32.8" y="6.7" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="6.0" width="8" height="0.7" fill="#d73027"/><rect x="43.199999999999996" y="60.1" width="8" height="11.9" fill="#1a9641"/><rect x="43.199999999999996" y="46.9" width="8" height="13.2" fill="#a6d96a"/><rect x="43.199999999999996" y="30.4" width="8" height="16.5" fill="#ffff8c"/><rect x="43.199999999999996" y="20.5" width="8" height="9.9" fill="#fdae61"/><rect x="43.199999999999996" y="12.6" width="8" height="7.9" fill="#f46d43"/><rect x="43.199999999999996" y="8.6" width="8" height="4.0" fill="#d73027"/><rect x="43.199999999999996" y="6.0" width="8" height="2.6" fill="#a50026"/><rect x="53.599999999999994" y="65.4" width="8" height="6.6" fill="#1a9641"/><rect x="53.599999999999994" y="56.2" width="8" height="9.2" fill="#a6d96a"/><rect x="53.599999999999994" y="41.6" width="8" height="14.5" fill="#ffff8c"/><rect x="53.599999999999994" y="29.8" width="8" height="11.9" fill="#fdae61"/><rect x="53.599999999999994" y="19.2" width="8" height="10.6" fill="#f46d43"/><rect x="53.599999999999994" y="12.6" width="8" height="6.6" fill="#d73027"/><rect x="53.599999999999994" y="6.0" width="8" height="6.6" fill="#a50026"/><rect x="63.99999999999999" y="68.0" width="8" height="4.0" fill="#1a9641"/><rect x="63.99999999999999" y="61.4" width="8" height="6.6" fill="#a6d96a"/><rect x="63.99999999999999" y="49.6" width="8" height="11.9" fill="#ffff8c"/><rect x="63.99999999999999" y="36.4" width="8" height="13.2" fill="#fdae61"/><rect x="63.99999999999999" y="23.2" width="8" height="13.2" fill="#f46d43"/><rect x="63.99999999999999" y="15.2" width="8" height="7.9" fill="#d73027"/><rect x="63.99999999999999" y="6.0" width="8" height="9.2" fill="#a50026"/><rect x="74.39999999999999" y="68.7" width="8" height="3.3" fill="#1a9641"/><rect x="74.39999999999999" y="63.4" width="8" height="5.3" fill="#a6d96a"/><rect x="74.39999999999999" y="54.2" width="8" height="9.2" fill="#ffff8c"/><rect x="74.39999999999999" y="43.6" width="8" height="10.6" fill="#fdae61"/><rect x="74.39999999999999" y="29.1" width="8" height="14.5" fill="#f46d43"/><rect x="74.39999999999999" y="19.2" width="8" height="9.9" fill="#d73027"/><rect x="74.39999999999999" y="6.0" width="8" height="13.2" fill="#a50026"/><rect x="84.8" y="70.0" width="8" height="2.0" fill="#1a9641"/><rect x="84.8" y="66.1" width="8" height="4.0" fill="#a6d96a"/><rect x="84.8" y="59.5" width="8" height="6.6" fill="#ffff8c"/><rect x="84.8" y="50.2" width="8" height="9.2" fill="#fdae61"/><rect x="84.8" y="37.0" width="8" height="13.2" fill="#f46d43"/><rect x="84.8" y="25.8" width="8" height="11.2" fill="#d73027"/><rect x="84.8" y="6.0" width="8" height="19.8" fill="#a50026"/><rect x="95.2" y="70.7" width="8" height="1.3" fill="#1a9641"/><rect x="95.2" y="68.0" width="8" height="2.6" fill="#a6d96a"/><rect x="95.2" y="62.8" width="8" height="5.3" fill="#ffff8c"/><rect x="95.2" y="56.2" width="8" height="6.6" fill="#fdae61"/><rect x="95.2" y="44.3" width="8" height="11.9" fill="#f46d43"/><rect x="95.2" y="32.4" width="8" height="11.9" fill="#d73027"/><rect x="95.2" y="6.0" width="8" height="26.4" fill="#a50026"/><rect x="105.60000000000001" y="71.3" width="8" height="0.7" fill="#1a9641"/><rect x="105.60000000000001" y="69.4" width="8" height="2.0" fill="#a6d96a"/><rect x="105.60000000000001" y="65.4" width="8" height="4.0" fill="#ffff8c"/><rect x="105.60000000000001" y="60.1" width="8" height="5.3" fill="#fdae61"/><rect x="105.60000000000001" y="50.9" width="8" height="9.2" fill="#f46d43"/><rect x="105.60000000000001" y="37.7" width="8" height="13.2" fill="#d73027"/><rect x="105.60000000000001" y="6.0" width="8" height="31.7" fill="#a50026"/></svg></figure>
+            <figure class="thumb" data-tip="Label mix per neighbourhood, from mostly A (green) to mostly G (red)"><svg viewBox="0 0 120 80" role="img" aria-label="Energy label mix per neighbourhood, best to worst"><path class="t-axis" d="M8 4 V72 H116"/><rect x="12" y="15.9" width="8" height="56.1" fill="#1a9641"/><rect x="12" y="9.3" width="8" height="6.6" fill="#a6d96a"/><rect x="12" y="7.3" width="8" height="2.0" fill="#ffff8c"/><rect x="12" y="6.7" width="8" height="0.7" fill="#fdae61"/><rect x="12" y="6.0" width="8" height="0.7" fill="#f46d43"/><rect x="22.4" y="25.8" width="8" height="46.2" fill="#1a9641"/><rect x="22.4" y="12.6" width="8" height="13.2" fill="#a6d96a"/><rect x="22.4" y="9.3" width="8" height="3.3" fill="#ffff8c"/><rect x="22.4" y="7.3" width="8" height="2.0" fill="#fdae61"/><rect x="22.4" y="6.0" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="45.6" width="8" height="26.4" fill="#1a9641"/><rect x="32.8" y="15.9" width="8" height="29.7" fill="#a6d96a"/><rect x="32.8" y="10.6" width="8" height="5.3" fill="#ffff8c"/><rect x="32.8" y="8.0" width="8" height="2.6" fill="#fdae61"/><rect x="32.8" y="6.7" width="8" height="1.3" fill="#f46d43"/><rect x="32.8" y="6.0" width="8" height="0.7" fill="#d73027"/><rect x="43.199999999999996" y="60.1" width="8" height="11.9" fill="#1a9641"/><rect x="43.199999999999996" y="46.9" width="8" height="13.2" fill="#a6d96a"/><rect x="43.199999999999996" y="30.4" width="8" height="16.5" fill="#ffff8c"/><rect x="43.199999999999996" y="20.5" width="8" height="9.9" fill="#fdae61"/><rect x="43.199999999999996" y="12.6" width="8" height="7.9" fill="#f46d43"/><rect x="43.199999999999996" y="8.6" width="8" height="4.0" fill="#d73027"/><rect x="43.199999999999996" y="6.0" width="8" height="2.6" fill="#a50026"/><rect x="53.599999999999994" y="65.4" width="8" height="6.6" fill="#1a9641"/><rect x="53.599999999999994" y="56.2" width="8" height="9.2" fill="#a6d96a"/><rect x="53.599999999999994" y="41.6" width="8" height="14.5" fill="#ffff8c"/><rect x="53.599999999999994" y="29.8" width="8" height="11.9" fill="#fdae61"/><rect x="53.599999999999994" y="19.2" width="8" height="10.6" fill="#f46d43"/><rect x="53.599999999999994" y="12.6" width="8" height="6.6" fill="#d73027"/><rect x="53.599999999999994" y="6.0" width="8" height="6.6" fill="#a50026"/><rect x="63.99999999999999" y="68.0" width="8" height="4.0" fill="#1a9641"/><rect x="63.99999999999999" y="61.4" width="8" height="6.6" fill="#a6d96a"/><rect x="63.99999999999999" y="49.6" width="8" height="11.9" fill="#ffff8c"/><rect x="63.99999999999999" y="36.4" width="8" height="13.2" fill="#fdae61"/><rect x="63.99999999999999" y="23.2" width="8" height="13.2" fill="#f46d43"/><rect x="63.99999999999999" y="15.2" width="8" height="7.9" fill="#d73027"/><rect x="63.99999999999999" y="6.0" width="8" height="9.2" fill="#a50026"/><rect x="74.39999999999999" y="68.7" width="8" height="3.3" fill="#1a9641"/><rect x="74.39999999999999" y="63.4" width="8" height="5.3" fill="#a6d96a"/><rect x="74.39999999999999" y="54.2" width="8" height="9.2" fill="#ffff8c"/><rect x="74.39999999999999" y="43.6" width="8" height="10.6" fill="#fdae61"/><rect x="74.39999999999999" y="29.1" width="8" height="14.5" fill="#f46d43"/><rect x="74.39999999999999" y="19.2" width="8" height="9.9" fill="#d73027"/><rect x="74.39999999999999" y="6.0" width="8" height="13.2" fill="#a50026"/><rect x="84.8" y="70.0" width="8" height="2.0" fill="#1a9641"/><rect x="84.8" y="66.1" width="8" height="4.0" fill="#a6d96a"/><rect x="84.8" y="59.5" width="8" height="6.6" fill="#ffff8c"/><rect x="84.8" y="50.2" width="8" height="9.2" fill="#fdae61"/><rect x="84.8" y="37.0" width="8" height="13.2" fill="#f46d43"/><rect x="84.8" y="25.8" width="8" height="11.2" fill="#d73027"/><rect x="84.8" y="6.0" width="8" height="19.8" fill="#a50026"/><rect x="95.2" y="70.7" width="8" height="1.3" fill="#1a9641"/><rect x="95.2" y="68.0" width="8" height="2.6" fill="#a6d96a"/><rect x="95.2" y="62.8" width="8" height="5.3" fill="#ffff8c"/><rect x="95.2" y="56.2" width="8" height="6.6" fill="#fdae61"/><rect x="95.2" y="44.3" width="8" height="11.9" fill="#f46d43"/><rect x="95.2" y="32.4" width="8" height="11.9" fill="#d73027"/><rect x="95.2" y="6.0" width="8" height="26.4" fill="#a50026"/><rect x="105.60000000000001" y="71.3" width="8" height="0.7" fill="#1a9641"/><rect x="105.60000000000001" y="69.4" width="8" height="2.0" fill="#a6d96a"/><rect x="105.60000000000001" y="65.4" width="8" height="4.0" fill="#ffff8c"/><rect x="105.60000000000001" y="60.1" width="8" height="5.3" fill="#fdae61"/><rect x="105.60000000000001" y="50.9" width="8" height="9.2" fill="#f46d43"/><rect x="105.60000000000001" y="37.7" width="8" height="13.2" fill="#d73027"/><rect x="105.60000000000001" y="6.0" width="8" height="31.7" fill="#a50026"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/hague-energy-labels.html">Do richer neighbourhoods live in greener homes?</a></h3>
               <p>Household income, energy labels and neighbourhood types across the 114 neighbourhoods of The Hague, with spatial statistics and K-means clustering.</p>
@@ -162,7 +184,7 @@
           </li>
 
           <li class="project">
-            <figure class="thumb"><svg viewBox="0 0 120 80" role="img" aria-label="Out-of-school rate falling with national wealth"><path class="t-axis" d="M8 4 V72 H116"/><g class="t-dots"><circle cx="12.0" cy="39.1" r="1.6"/><circle cx="15.1" cy="21.5" r="1.6"/><circle cx="18.2" cy="31.5" r="1.6"/><circle cx="21.3" cy="18.0" r="1.6"/><circle cx="24.4" cy="16.8" r="1.6"/><circle cx="27.5" cy="49.0" r="1.6"/><circle cx="30.6" cy="52.0" r="1.6"/><circle cx="33.7" cy="6.0" r="1.6"/><circle cx="36.8" cy="37.9" r="1.6"/><circle cx="39.9" cy="39.3" r="1.6"/><circle cx="43.0" cy="6.0" r="1.6"/><circle cx="46.1" cy="27.6" r="1.6"/><circle cx="49.2" cy="15.0" r="1.6"/><circle cx="52.3" cy="37.8" r="1.6"/><circle cx="55.4" cy="37.3" r="1.6"/><circle cx="58.5" cy="57.9" r="1.6"/><circle cx="61.6" cy="50.2" r="1.6"/><circle cx="64.7" cy="54.0" r="1.6"/><circle cx="67.8" cy="59.6" r="1.6"/><circle cx="70.9" cy="57.0" r="1.6"/><circle cx="74.0" cy="58.4" r="1.6"/><circle cx="77.1" cy="66.8" r="1.6"/><circle cx="80.2" cy="58.3" r="1.6"/><circle cx="83.3" cy="60.8" r="1.6"/><circle cx="86.4" cy="64.6" r="1.6"/><circle cx="89.5" cy="67.9" r="1.6"/><circle cx="92.6" cy="59.2" r="1.6"/><circle cx="95.7" cy="63.8" r="1.6"/><circle cx="98.8" cy="61.8" r="1.6"/><circle cx="101.9" cy="60.8" r="1.6"/><circle cx="105.0" cy="62.8" r="1.6"/><circle cx="108.1" cy="61.6" r="1.6"/><circle cx="111.2" cy="66.3" r="1.6"/><circle cx="114.3" cy="63.7" r="1.6"/></g><path class="t-line" d="M10 22 H44 L50 36 L58 54 L66 64 H116"/></svg></figure>
+            <figure class="thumb" data-tip="Out-of-school rates drop steeply between $2,000 and $4,000 GDP per capita"><svg viewBox="0 0 120 80" role="img" aria-label="Out-of-school rate falling with national wealth"><path class="t-axis" d="M8 4 V72 H116"/><g class="t-dots"><circle cx="12.0" cy="39.1" r="1.6"/><circle cx="15.1" cy="21.5" r="1.6"/><circle cx="18.2" cy="31.5" r="1.6"/><circle cx="21.3" cy="18.0" r="1.6"/><circle cx="24.4" cy="16.8" r="1.6"/><circle cx="27.5" cy="49.0" r="1.6"/><circle cx="30.6" cy="52.0" r="1.6"/><circle cx="33.7" cy="6.0" r="1.6"/><circle cx="36.8" cy="37.9" r="1.6"/><circle cx="39.9" cy="39.3" r="1.6"/><circle cx="43.0" cy="6.0" r="1.6"/><circle cx="46.1" cy="27.6" r="1.6"/><circle cx="49.2" cy="15.0" r="1.6"/><circle cx="52.3" cy="37.8" r="1.6"/><circle cx="55.4" cy="37.3" r="1.6"/><circle cx="58.5" cy="57.9" r="1.6"/><circle cx="61.6" cy="50.2" r="1.6"/><circle cx="64.7" cy="54.0" r="1.6"/><circle cx="67.8" cy="59.6" r="1.6"/><circle cx="70.9" cy="57.0" r="1.6"/><circle cx="74.0" cy="58.4" r="1.6"/><circle cx="77.1" cy="66.8" r="1.6"/><circle cx="80.2" cy="58.3" r="1.6"/><circle cx="83.3" cy="60.8" r="1.6"/><circle cx="86.4" cy="64.6" r="1.6"/><circle cx="89.5" cy="67.9" r="1.6"/><circle cx="92.6" cy="59.2" r="1.6"/><circle cx="95.7" cy="63.8" r="1.6"/><circle cx="98.8" cy="61.8" r="1.6"/><circle cx="101.9" cy="60.8" r="1.6"/><circle cx="105.0" cy="62.8" r="1.6"/><circle cx="108.1" cy="61.6" r="1.6"/><circle cx="111.2" cy="66.3" r="1.6"/><circle cx="114.3" cy="63.7" r="1.6"/></g><path class="t-line" pathLength="1" d="M10 22 H44 L50 36 L58 54 L66 64 H116"/></svg></figure>
             <div class="project-main">
               <h3><a href="blog/education-spending.html">Do richer countries keep more children in school?</a></h3>
               <p>Wealth, public spending and out-of-school rates across 217 economies, 2000–2025, using World Bank development indicators.</p>
@@ -186,22 +208,6 @@
           <li><a href="https://github.com/yourusername">GitHub</a></li>
           <li><a href="https://www.kaggle.com/yourusername">Kaggle</a></li>
         </ul>
-
-        <!-- Playful touch: a trend line that turns into a forecast -->
-        <figure class="forecast" aria-label="A trend line that continues as a dashed forecast towards your team in 2027">
-          <svg viewBox="0 -24 1000 194" preserveAspectRatio="xMidYMid meet">
-            <line class="f-base" x1="20" y1="140" x2="980" y2="140"/>
-            <path class="f-solid" d="M20 128 L90 122 L160 125 L230 112 L300 115 L370 100 L440 94 L510 98 L580 80 L650 74 L720 60"/>
-            <path class="f-band" d="M720 60 L940 18 L940 58 Z"/>
-            <path class="f-dash" d="M720 60 L940 38"/>
-            <circle class="f-now" cx="720" cy="60" r="7"/>
-            <circle class="f-end" cx="940" cy="38" r="9"/>
-            <text class="f-tick" x="20" y="163">2017</text>
-            <text class="f-tick" x="720" y="163" text-anchor="middle">now</text>
-            <text class="f-tick" x="940" y="163" text-anchor="middle">2027</text>
-            <text class="f-label" x="960" y="0" text-anchor="end">Your team, 2027</text>
-          </svg>
-        </figure>
       </div>
     </section>
 
@@ -213,5 +219,6 @@
     </div>
   </footer>
 
+<script src="site.js" defer></script>
 </body>
 </html>

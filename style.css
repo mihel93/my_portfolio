@@ -180,28 +180,6 @@ a { color: var(--delft); }
 }
 .btn-ghost:hover { background: var(--delft-tint); }
 
-/* Round portrait with a thin ring */
-.portrait {
-  margin: 0;
-  justify-self: end;
-  width: 100%;
-  max-width: 340px;
-  aspect-ratio: 1 / 1;
-  padding: 8px;
-  background: var(--surface);
-  border: 2px solid var(--ink);
-  border-radius: 50%;
-}
-
-.portrait img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 50% 30%;   /* keeps the face centred in the circle */
-  border-radius: 50%;
-}
-
 /* Spec sheet, like the title block on a technical drawing */
 .spec {
   margin: 0;
@@ -494,50 +472,110 @@ a { color: var(--delft); }
   color: var(--muted);
 }
 
-/* ===== Skills: evidence heatmap ===== */
-.heat-wrap {
-  position: relative;      /* keeps the screen-reader labels inside the scroll box */
-  margin-top: 28px;
-  overflow-x: auto;
+/* ===== Skills: star schema ===== */
+.star {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-areas:
+    "d1 d5   d2"
+    "d3 fact d4"
+    ".  d6   .";
+  gap: 64px 72px;
+  margin-top: 36px;
+  align-items: center;
 }
 
-.heatmap {
-  border-collapse: separate;
-  border-spacing: 4px;
-  font-size: 0.92rem;
-}
+.d1 { grid-area: d1; }
+.d2 { grid-area: d2; }
+.d3 { grid-area: d3; }
+.d4 { grid-area: d4; }
+.d5 { grid-area: d5; }
+.d6 { grid-area: d6; }
+.st-fact-pos { grid-area: fact; }
 
-.heatmap thead th {
-  font-family: var(--mono);
-  font-weight: 500;
-  font-size: 0.8rem;
-  text-align: center;
-  vertical-align: bottom;
-  padding: 0 4px 6px;
-  min-width: 64px;
+.st-lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 0;
 }
-.heatmap thead a { color: var(--delft); text-decoration: none; }
-.heatmap thead a:hover { text-decoration: underline; }
+.st-rel  { stroke: var(--ink); stroke-width: 1.5; }
+.st-card { font-family: var(--mono); font-size: 13px; fill: var(--muted); text-anchor: middle; }
 
-.heatmap tbody th {
-  font-weight: 500;
-  text-align: left;
-  padding-right: 16px;
-  white-space: nowrap;
-}
-
-.heatmap td {
-  height: 30px;
-  border-radius: 3px;
-}
-.heatmap td.on  { background: var(--delft); }
-.heatmap td.off { background: var(--paper); box-shadow: inset 0 0 0 1px var(--rule); }
-
-.heat-also {
-  margin-top: 16px;
+.st-table {
+  position: relative;
+  z-index: 1;
+  background: var(--surface);
+  border: 1.5px solid var(--ink);
+  border-radius: 4px;
+  box-shadow: 3px 3px 0 var(--rule);
   font-size: 0.9rem;
+}
+
+.st-table header {
+  padding: 8px 12px;
+  border-bottom: 1.5px solid var(--ink);
+  background: var(--paper);
+}
+.st-name {
+  display: block;
+  font-family: var(--mono);
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+.st-title {
+  display: block;
+  font-size: 0.8rem;
   color: var(--muted);
-  max-width: 70ch;
+}
+
+.st-table ul {
+  list-style: none;
+  margin: 0;
+  padding: 6px 0;
+}
+.st-table li {
+  padding: 3px 12px 3px 30px;
+  position: relative;
+  line-height: 1.35;
+}
+/* column icon, like a field in a model view */
+.st-table li::before {
+  content: "";
+  position: absolute;
+  left: 12px; top: 0.6em;
+  width: 9px; height: 7px;
+  border: 1.5px solid var(--muted);
+  border-radius: 1px;
+}
+
+/* the fact table stands out */
+.st-fact { border-width: 2px; box-shadow: 4px 4px 0 var(--delft-tint); }
+.st-fact header { background: var(--delft); border-bottom-color: var(--delft); }
+.st-fact .st-name,
+.st-fact .st-title { color: #fff; }
+.st-fk { font-family: var(--mono); font-size: 0.82rem; color: var(--delft); }
+.st-fact li:has(.st-fk)::before { border-color: var(--delft); border-radius: 50%; width: 8px; height: 8px; }
+
+@media (max-width: 900px) {
+  .star {
+    grid-template-columns: 1fr;
+    grid-template-areas: "fact" "d1" "d2" "d3" "d4" "d5" "d6";
+    gap: 28px;
+  }
+  /* on narrow screens the dimensions stack, each joined to the fact table by a short line */
+  .st-lines { display: none; }
+  .st-table:not(.st-fact)::before {
+    content: "";
+    position: absolute;
+    left: 50%;
+    top: -29px;
+    height: 28px;
+    border-left: 1.5px solid var(--ink);
+  }
 }
 
 /* ===== Projects: chart thumbnails (small multiples) ===== */
@@ -557,22 +595,6 @@ a { color: var(--delft); }
 .t-line { fill: none; stroke: var(--delft); stroke-width: 2.2; stroke-linejoin: round; }
 .t-fill { fill: var(--delft-tint); }
 .t-dots circle { fill: #9aa3ad; }
-
-/* ===== Contact: forecast line ===== */
-.forecast {
-  margin: 40px 0 0;
-  max-width: 820px;
-}
-.forecast svg { display: block; width: 100%; height: auto; overflow: visible; }
-
-.f-base  { stroke: var(--ink); stroke-width: 2; }
-.f-solid { fill: none; stroke: var(--delft); stroke-width: 4; stroke-linejoin: round; }
-.f-dash  { fill: none; stroke: var(--delft); stroke-width: 4; stroke-dasharray: 10 9; }
-.f-band  { fill: var(--delft-tint); }
-.f-now   { fill: var(--delft); }
-.f-end   { fill: var(--paper); stroke: var(--delft); stroke-width: 4; }
-.f-tick  { font-family: var(--mono); font-size: 18px; fill: var(--muted); }
-.f-label { font-family: var(--mono); font-size: 24px; font-weight: 600; fill: var(--ink); }
 
 /* ===== Blog index ===== */
 .page-head {
@@ -734,10 +756,162 @@ a { color: var(--delft); }
   font-size: 0.9rem;
 }
 
+/* ===== Hero: scatter plot with the photo as the outlier ===== */
+.scatter {
+  position: relative;
+  margin: 0;
+  justify-self: end;
+  width: 100%;
+  max-width: 440px;
+  aspect-ratio: 1 / 1;
+}
+
+.sc-plot { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.sc-axis   { fill: none; stroke: var(--ink); stroke-width: 2; }
+.sc-ticks  { stroke: var(--ink); stroke-width: 2; }
+.sc-dots circle {
+  fill: #9aa3ad;
+  opacity: 0.75;
+  transform-box: fill-box;
+  transform-origin: center;
+  transition: transform 0.2s ease, fill 0.2s ease, opacity 0.2s ease;
+}
+.sc-dots circle:hover { transform: scale(1.8); fill: var(--delft); opacity: 1; }
+.sc-leader { fill: none; stroke: var(--muted); stroke-width: 1.5; }
+.sc-note, .sc-axis-label { font-family: var(--mono); fill: var(--muted); }
+.sc-note { font-size: 15px; }
+.sc-axis-label { font-size: 16px; fill: var(--ink); font-weight: 500; }
+
+.sc-point {
+  position: absolute;
+  left: 74%;
+  top: 25%;
+  width: 40%;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  padding: 5px;
+  background: var(--surface);
+  border: 2px solid var(--delft);
+  border-radius: 50%;
+  box-shadow: 0 0 0 6px var(--delft-tint);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.sc-point img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: 50% 30%;
+  border-radius: 50%;
+}
+.sc-point:hover,
+.sc-point:focus-visible {
+  transform: translate(-50%, -50%) scale(1.06);
+  box-shadow: 0 0 0 10px var(--delft-tint);
+}
+
+/* ===== Tooltip (shared by all charts) ===== */
+.tooltip {
+  position: fixed;
+  z-index: 50;
+  max-width: 280px;
+  padding: 8px 12px;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.85rem;
+  line-height: 1.4;
+  border-radius: 4px;
+  box-shadow: 0 6px 18px rgba(27, 31, 36, 0.18);
+  pointer-events: none;
+  opacity: 0;
+  transform: translateY(4px);
+  transition: opacity 0.15s ease, transform 0.15s ease;
+}
+.tooltip.is-visible { opacity: 1; transform: translateY(0); }
+
+[data-tip] { cursor: help; }
+.thumb[data-tip] { cursor: pointer; }
+
+/* ===== Hover animations ===== */
+
+/* Buttons lift */
+.btn {
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+}
+.btn:hover,
+.btn:focus-visible { transform: translateY(-2px); box-shadow: 0 4px 0 var(--delft-tint); }
+.btn:active { transform: translateY(0); box-shadow: none; }
+
+/* Text links: underline slides in */
+.contact-links a,
+.back,
+.post-nav a {
+  text-decoration: none;
+  background-image: linear-gradient(currentColor, currentColor);
+  background-size: 0 1.5px;
+  background-position: 0 100%;
+  background-repeat: no-repeat;
+  transition: background-size 0.2s ease;
+}
+.contact-links a:hover, .contact-links a:focus-visible,
+.back:hover, .post-nav a:hover { background-size: 100% 1.5px; text-decoration: none; }
+.contact-links a { padding-bottom: 2px; }
+
+.site-header nav a { transition: color 0.15s ease; }
+
+/* Gantt: hovered row's bar thickens, the others fade */
+.gantt-rows li { transition: opacity 0.2s ease; }
+.g-bar { transition: transform 0.2s ease, filter 0.2s ease; transform-origin: left center; }
+.gantt-rows:hover li { opacity: 0.45; }
+.gantt-rows li:hover,
+.gantt-rows li:focus-visible { opacity: 1; }
+.gantt-rows li:hover .g-bar,
+.gantt-rows li:focus-visible .g-bar { transform: scaleY(1.45); filter: brightness(1.08); }
+.g-mark { transition: transform 0.2s ease; cursor: help; }
+.g-mark:hover,
+.g-mark:focus-visible { transform: translate(-50%, -50%) rotate(45deg) scale(1.4); }
+
+/* Star schema: a table lifts and its relationship is highlighted */
+.st-table { transition: transform 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease; }
+.st-table:hover,
+.st-table:focus-visible { transform: translateY(-3px); box-shadow: 5px 6px 0 var(--delft-tint); }
+.star.has-focus .st-table:not(.is-linked) { opacity: 0.45; }
+.st-table.is-linked:not(.st-fact) { border-color: var(--delft); }
+.st-edge .st-rel  { transition: stroke 0.2s ease, stroke-width 0.2s ease; }
+.st-edge.is-active .st-rel  { stroke: var(--delft); stroke-width: 3; }
+.st-edge.is-active .st-card { fill: var(--delft); font-weight: 600; }
+
+/* Project thumbnails: lift, and the curve redraws */
+.thumb {
+  position: relative;
+  z-index: 2;                 /* above the row link, so the tooltip works */
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+}
+.project:hover .thumb,
+.thumb:hover { transform: translateY(-2px) scale(1.04); box-shadow: 3px 4px 0 var(--delft-tint); border-color: var(--delft); }
+.t-line { stroke-dasharray: 1; stroke-dashoffset: 0; }
+.project:hover .t-line { animation: draw-line 0.9s ease forwards; }
+.project:hover .thumb rect { animation: grow-bar 0.6s ease both; transform-box: fill-box; transform-origin: bottom; }
+@keyframes draw-line { from { stroke-dashoffset: 1; } to { stroke-dashoffset: 0; } }
+@keyframes grow-bar  { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+
+/* Blog charts: lift, open full size on click */
+.fig-link { display: block; cursor: zoom-in; }
+.fig-link img { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+.fig-link:hover img,
+.fig-link:focus-visible img { transform: translateY(-3px); box-shadow: 0 8px 20px rgba(27, 31, 36, 0.12); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
 /* ===== Responsive ===== */
 @media (max-width: 820px) {
   .hero-grid { grid-template-columns: 1fr; }
-  .portrait { justify-self: start; max-width: 160px; padding: 5px; grid-row: 1; }
+  .scatter { justify-self: start; max-width: 280px; grid-row: 1; }
   .skills div { grid-template-columns: 1fr; }
   .skills dt { border-right: 0; border-bottom: 1px solid var(--rule); }
   .project { grid-template-columns: 1fr; gap: 12px; }
@@ -748,17 +922,6 @@ a { color: var(--delft); }
 
 @media (max-width: 560px) {
   .logo { white-space: nowrap; font-size: 0.9rem; }
-
-  /* heatmap fits a phone: wrapping row labels, narrower cells */
-  .heatmap { border-spacing: 3px; font-size: 0.82rem; width: 100%; }
-  .heatmap tbody th { white-space: normal; padding-right: 6px; line-height: 1.25; }
-  .heatmap thead th { min-width: 0; width: 13%; font-size: 0.66rem; padding: 0 0 4px; line-height: 1.2; }
-  .heatmap td { height: 26px; }
-
-  /* bigger chart text on small screens */
-  .f-tick  { font-size: 32px; }
-  .f-label { font-size: 44px; }
-
   .site-header nav a[href$="#about"],
   .site-header nav a[href$="#skills"] { display: none; }
   .facts div { grid-template-columns: 6rem 1fr; }

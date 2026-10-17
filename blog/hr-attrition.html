@@ -49,28 +49,36 @@
         <h2>Where attrition is concentrated</h2>
         <p>Risk is far from evenly spread. Sales Representatives leave at 39.8%, employees in their first two years at 29.8%, under-25s at 35.8% and the lowest income band at 28.6%. Senior roles are the most stable: Research Directors 2.5%, Managers 4.9%.</p>
         <figure>
-          <img src="../images/projects/hr-attrition-1.png" alt="Bar charts of attrition rate by department and by job role" loading="lazy">
+          <a class="fig-link" href="../images/projects/hr-attrition-1.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/hr-attrition-1.png" alt="Bar charts of attrition rate by department and by job role" loading="lazy">
+          </a>
           <figcaption>Attrition by department and job role, with 95% intervals.</figcaption>
         </figure>
 
         <h2>Which factors matter most</h2>
         <p>I tested every factor the same way and ranked them by effect size (Cramér's V) rather than p-value, because with 1,470 people even tiny differences are "significant". Overtime is the strongest single factor: 30.5% attrition with overtime against 10.4% without, 2.9 times higher. Leavers also earn less, with a median monthly income of $3,202 against $5,204.</p>
         <figure>
-          <img src="../images/projects/hr-attrition-2.png" alt="Effect size per factor, with overtime highest" loading="lazy">
+          <a class="fig-link" href="../images/projects/hr-attrition-2.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/hr-attrition-2.png" alt="Effect size per factor, with overtime highest" loading="lazy">
+          </a>
           <figcaption>Effect size per factor. Overtime has by far the strongest link with leaving.</figcaption>
         </figure>
 
         <h2>Predicting who is at risk</h2>
         <p>Only 16% of employees left, so predicting "everyone stays" is already 84% accurate and useless. I compared models on AUC instead: logistic regression reaches 0.82 on the test set, beating a random forest (0.77). Flagging the top 20% of risk scores finds 62% of leavers. At the chosen threshold, 53% of flagged employees actually leave, against 16% if picked at random.</p>
         <figure>
-          <img src="../images/projects/hr-attrition-3.png" alt="ROC curves and cumulative gains curve for the models" loading="lazy">
+          <a class="fig-link" href="../images/projects/hr-attrition-3.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/hr-attrition-3.png" alt="ROC curves and cumulative gains curve for the models" loading="lazy">
+          </a>
           <figcaption>Logistic regression ranks leavers best. Checking 1 in 5 employees finds 62% of leavers.</figcaption>
         </figure>
 
         <h2>The business case</h2>
         <p>At an assumed $50,000 per leaver, I compared four retention measures. A risk score with stay interviews (+$1.80M) and an early-career programme (+$1.62M) give the highest net value. Targeted pay rises don't pay back on replacement cost alone, though they may still be right for fairness reasons.</p>
         <figure>
-          <img src="../images/projects/hr-attrition-4.png" alt="Net value of four retention scenarios" loading="lazy">
+          <a class="fig-link" href="../images/projects/hr-attrition-4.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/hr-attrition-4.png" alt="Net value of four retention scenarios" loading="lazy">
+          </a>
           <figcaption>Net value per scenario. Costs and prevention rates are stated assumptions.</figcaption>
         </figure>
 
@@ -102,5 +110,6 @@
     </div>
   </footer>
 
+  <script src="../site.js" defer></script>
 </body>
 </html>
