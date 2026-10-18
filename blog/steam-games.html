@@ -4,11 +4,25 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>What makes a Steam game successful? | Mihail Deligrozev</title>
-  <meta name="description" content="Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.">
+  <meta name="description" content="Defining success fairly across 125,854 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="../style.css">
+  <style>
+    /* Post-specific additions: tables, abstract box, figure and table numbering */
+    .post-body .abstract { border-left: 4px solid #FE5F00; background: #F5F4EF; padding: 18px 22px; margin: 24px 0; }
+    .post-body .abstract h2 { margin-top: 0; }
+    .post-body .table-wrap { overflow-x: auto; margin: 20px 0 28px; }
+    .post-body table { width: 100%; border-collapse: collapse; font-size: 0.92em; }
+    .post-body caption { text-align: left; font-weight: 600; padding-bottom: 8px; }
+    .post-body th, .post-body td { text-align: left; padding: 7px 10px; border-bottom: 1px solid #DCD9CF; vertical-align: top; }
+    .post-body thead th { border-bottom: 2px solid #23231A; font-weight: 600; }
+    .post-body td.num, .post-body th.num { text-align: right; white-space: nowrap; }
+    .post-body td.num { font-family: "IBM Plex Mono", monospace; }
+    .post-body .source-note { font-size: 0.85em; opacity: 0.75; }
+    .post-body ol.refs { font-size: 0.92em; }
+  </style>
 </head>
 <body>
 
@@ -31,68 +45,303 @@
         <a class="back" href="./">All posts</a>
 
         <h1>What makes a Steam game successful?</h1>
-        <p class="post-lead">Defining success fairly across 125,855 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.</p>
-        <ul class="tags"><li>Python</li><li>SQL / DuckDB</li><li>Gradient boosting</li><li>SHAP</li></ul>
+        <p class="post-lead">Defining success fairly across 125,854 Steam games, testing which launch-time features go with it, and predicting hits with SQL and Python.</p>
+        <ul class="tags"><li>Python</li><li>SQL / DuckDB</li><li>Gradient boosting</li><li>Statistics</li></ul>
 
         <dl class="facts" aria-label="Project facts">
-          <div><dt>Data</dt><dd>Steam Games Dataset (Kaggle), 125,855 games</dd></div>
-          <div><dt>Tools</dt><dd>pandas, DuckDB, SQL, scikit-learn, SHAP</dd></div>
+          <div><dt>Data</dt><dd><a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">Steam Games Dataset (Kaggle)</a>, 125,854 games</dd></div>
+          <div><dt>Tools</dt><dd>pandas, DuckDB, SQL, scikit-learn</dd></div>
           <div><dt>Type</dt><dd>Personal project, Kaggle notebook</dd></div>
         </dl>
 
-        <h2>The question</h2>
-        <p>What does "successful" mean for a game on Steam, which features known at launch go with success, and how well can a model predict it before the market has spoken?</p>
+        <!-- 1. ABSTRACT -->
+        <section class="abstract" aria-labelledby="abstract">
+          <h2 id="abstract">Abstract</h2>
+          <p>Steam is extremely unequal: in this dataset the top 1% of games hold 80% of all user reviews. So "above average" is a poor definition of success. I define success four ways (commercial, quality, engagement, and a strict <em>hit</em> that needs both commercial and quality success) and use each to test which features known at launch go with success. Achievements, Steam categories, supported languages and DLC are the strongest indicators, and they hold under all four definitions. A gradient-boosting model trained on games up to 2021 and tested on later releases reaches a ROC AUC of 0.80 for <em>hit</em>. Its top 10% of predictions contain 43% of the actual hits. These are associations, not causes.</p>
+          <figure>
+            <a class="fig-link" href="../images/projects/steam-games/fig00_abstract.png" data-tip="Click to open the full-size chart">
+              <img src="../images/projects/steam-games/fig00_abstract.png" alt="Left: the top 1% of games hold 80% of reviews and the top 10% hold 98%. Right: model AUC per success label, from 0.63 for commercial to 0.91 for engagement." loading="lazy">
+            </a>
+            <figcaption><strong>Figure 1.</strong> Left: attention is concentrated in a few games. Right: how well a model using only launch-time facts predicts each success label on newer games.</figcaption>
+          </figure>
+        </section>
 
-        <h2>The data, and a broken file</h2>
-        <p>The raw file had 39 column names but 40 values in every row: two names were glued together ("DiscountDLC count"). Read naively, every column after it shifts by one and the AppID column holds game names. I fixed the header before loading, cleaned the data in pandas and stored it as a small relational model in DuckDB, with separate bridge tables for genres and tags so questions like "success rate per genre" become a plain SQL join.</p>
-        <p>Lossless type changes cut the tables from 148.9 MB to 53.4 MB in memory, and Parquet stores them in 10.2 MB on disk, four times smaller than CSV.</p>
+        <!-- 2. INTRODUCTION -->
+        <h2 id="introduction">1. Introduction and research question</h2>
+        <p>Releasing on Steam has never been easier, and the store has never been more crowded. SteamDB counted about <a href="https://www.gamingonlinux.com/2025/01/valve-saw-a-record-breaking-nearly-19-000-games-released-on-steam-in-2024">19,000 releases in 2024</a>, up from <a href="https://gamedevreports.substack.com/p/steamdb-in-2023-14533-games-were">14,533 in 2023</a>. The dataset used here shows the same growth (Figure 2). Most of those games earn very little: by Gamalytic's estimates, <a href="https://mp1st.com/news/40-of-steam-games-in-2025-earned-less-than-100">about 40% of 2025 releases earned less than the $100 Steam listing fee</a>.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig02_releases_and_reviews_by_year.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig02_releases_and_reviews_by_year.png" alt="Games released per year rising to about 25,000 in 2025, and review distributions per year showing most games get very few reviews" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 2.</strong> Left: releases per year in the dataset (the last year is incomplete). Right: review counts per release year. Every year produces a large mass of games with almost no reviews, and 55% of all games have fewer than 10.</figcaption>
+        </figure>
+        <p>For a developer or publisher, the useful question is not which games became famous. It is which facts, known on launch day, go with a better chance of success. This project asks three questions:</p>
+        <ol>
+          <li><strong>Definition:</strong> what is a fair way to define "successful" when games of different ages are compared?</li>
+          <li><strong>Indicators:</strong> which features known at launch go with success, and do they hold under different definitions?</li>
+          <li><strong>Prediction:</strong> how well can a model trained only on launch-time facts identify future successes?</li>
+        </ol>
 
-        <h2>Defining success</h2>
-        <p>Attention on Steam is winner-takes-most: the top 1% of games hold 80% of all reviews. "Above average" is therefore a misleading target, so I defined success as a top percentile, in four ways:</p>
+        <!-- 3. DATA -->
+        <h2 id="data">2. Data: source, model and storage</h2>
+        <h3>Source</h3>
+        <p>The data is the <a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">Steam Games Dataset by FronkonGames</a> on Kaggle: 125,855 games and 40 columns, including price, release date, platforms, languages, genres, tags, review counts, playtime and an estimated owners range. Owner ranges follow the <a href="https://steamspy.com/about">SteamSpy method</a>, which samples user profiles and extrapolates from them. That limits how precise commercial success can be (see Section 5).</p>
+
+        <h3>Cleaning</h3>
+        <p>The raw file had 39 column names but 40 values in every row, because two names were glued together (<code>DiscountDLC count</code>). Read naively, every column after that point shifts by one and <code>AppID</code> holds game names. I split the header before loading. Table 1 lists the other cleaning steps.</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 1. Cleaning steps and their effect</caption>
+            <thead><tr><th>Step</th><th>Result</th></tr></thead>
+            <tbody>
+              <tr><td>Fix the glued header</td><td>40 names for 40 values; every column lines up</td></tr>
+              <tr><td>Check duplicates</td><td>0 duplicate rows, 0 duplicate AppIDs</td></tr>
+              <tr><td>Remove unnamed games</td><td>125,855 &rarr; 125,854 rows</td></tr>
+              <tr><td>Drop columns over 90% empty</td><td>4 dropped: Reviews, Metacritic url, Score rank, Movies</td></tr>
+              <tr><td>Parse dates and owner ranges</td><td>0 missing release dates, 0 missing owner ranges</td></tr>
+              <tr><td>Turn genre, tag and language text into lists; add counts and flags</td><td>58 columns ready for analysis</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Data model</h3>
+        <p>A game has several genres and tags. In pandas that is a list inside a cell; in SQL it belongs in a separate bridge table. I stored the cleaned data as four tables in <a href="https://duckdb.org/docs/">DuckDB</a>, a database that runs inside Python, so that "success rate per genre" is a plain join and <code>GROUP BY</code>, and "how did this studio's earlier games do?" is a <a href="https://duckdb.org/docs/stable/sql/functions/window_functions">window function</a> (Figure 3).</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/data_model.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/data_model.png" alt="Entity-relationship diagram: games table in the centre, joined one-to-many to game_genres and game_tags, and one-to-one to labels, all on app_id" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 3.</strong> The data model in <code>steam.duckdb</code>. Genres (338,583 rows) and tags (1,180,141 rows) are bridge tables, and success labels are added in their own table.</figcaption>
+        </figure>
+
+        <h3>Storage</h3>
+        <p>Changing column types without changing any value (for example 64-bit integers to 16-bit, repeated text to categories) cut the tables from 148.9 MB to 53.4 MB in memory. Every change was checked to be lossless. On disk, the format makes a large difference (Table 2).</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 2. The three tables on disk, by format</caption>
+            <thead><tr><th>Format</th><th class="num">Size (MB)</th><th class="num">Read time (s)</th><th class="num">Size vs CSV</th></tr></thead>
+            <tbody>
+              <tr><td>CSV</td><td class="num">41.2</td><td class="num">0.65</td><td class="num">100%</td></tr>
+              <tr><td>DuckDB file</td><td class="num">26.0</td><td class="num">0.26</td><td class="num">63%</td></tr>
+              <tr><td>CSV + gzip</td><td class="num">11.3</td><td class="num">0.75</td><td class="num">27%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-note">Read times are from one run and vary between machines; the size differences are the reliable result.</p>
+
+        <!-- 4. METHODOLOGY -->
+        <h2 id="methodology">3. Methodology</h2>
+        <h3>Defining success</h3>
+        <p>Because attention is so concentrated (Figure 4), success is defined as a top percentile, not as above average. Table 3 lists the four definitions. Commercial success is measured <em>within each release year</em>: a 2012 game has had a decade to gather owners, a 2023 game has not, and one global cutoff would simply reward age (Figure 6).</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 3. Success definitions (120,629 games on sale for at least a year)</caption>
+            <thead><tr><th>Label</th><th>Rule</th><th>Question it answers</th><th class="num">Share of games</th></tr></thead>
+            <tbody>
+              <tr><td>Commercial</td><td>Top 10% by estimated owners within its release year</td><td>Did it reach many players, compared with games of the same age?</td><td class="num">22.9%</td></tr>
+              <tr><td>Quality</td><td>At least 50 reviews and at least 80% positive</td><td>Do buyers like it?</td><td class="num">14.0%</td></tr>
+              <tr><td>Engagement</td><td>Among games with 50+ reviews, top 10% by median playtime</td><td>Do players keep playing?</td><td class="num">2.5%</td></tr>
+              <tr><td>Hit</td><td>Commercial and quality at once</td><td>Both: the strictest definition</td><td class="num">5.9%</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="source-note">Commercial success covers more than 10% of games because owners come in wide buckets, so many games tie at the cutoff.</p>
+
+        <h3>Testing indicators</h3>
+        <p>Each feature known at launch is compared with one success label at a time, using three tools (Table 4).</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 4. Statistical tools used to test indicators</caption>
+            <thead><tr><th>Tool</th><th>Used for</th><th>How to read it</th></tr></thead>
+            <tbody>
+              <tr><td><a href="https://en.wikipedia.org/wiki/Receiver_operating_characteristic#Area_under_the_curve">ROC AUC</a></td><td>Numeric features (price, languages, achievements)</td><td>Chance that a random successful game scores higher than a random other game. 0.5 = no signal.</td></tr>
+              <tr><td>Success rate with a <a href="https://en.wikipedia.org/wiki/Binomial_proportion_confidence_interval#Wilson_score_interval">Wilson 95% interval</a></td><td>Buckets and yes/no features</td><td>Shows the shape of the relationship. Where the intervals of two groups don't overlap, the difference is unlikely to be noise.</td></tr>
+              <tr><td><a href="https://en.wikipedia.org/wiki/Lift_(data_mining)">Lift</a></td><td>Genres and tags</td><td>Success rate of the group divided by the overall rate. 1.0 = average. Only groups with at least 300 games are shown.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Modelling</h3>
+        <p>The model is scikit-learn's <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">HistGradientBoostingClassifier</a>, trained on 29 features (15 numeric plus 14 genre flags). Three rules keep the result honest:</p>
         <ul>
-          <li><strong>Commercial:</strong> top 10% by owners <em>within its release year</em>, so old games aren't favoured just for being old</li>
-          <li><strong>Quality:</strong> at least 50 reviews and 80% positive</li>
-          <li><strong>Engagement:</strong> top 10% by median playtime</li>
-          <li><strong>Hit:</strong> commercial and quality at once, the strictest label (5.9% of games)</li>
+          <li><strong>No outcome columns as features.</strong> Owners, reviews, playtime, peak players and Metacritic score define or follow success, so they are excluded. Player-voted tags are excluded for the same reason.</li>
+          <li><strong>A time-based split.</strong> The model trains on 50,646 games released up to 2021 and is tested on 69,983 later games. A random split would let it learn from the future (<a href="https://scikit-learn.org/stable/common_pitfalls.html#data-leakage">scikit-learn on data leakage</a>).</li>
+          <li><strong>Several metrics.</strong> ROC AUC for ranking, <a href="https://scikit-learn.org/stable/modules/generated/sklearn.metrics.average_precision_score.html">average precision</a> for rare labels, a cumulative gains curve for practical use, and calibration to check the predicted chances.</li>
         </ul>
-        <p>Reach and quality turned out to be different things: owners and positive-review share are uncorrelated, and only 26% of commercial hits are also well liked.</p>
+        <p>Feature importance comes from two angles: <a href="https://scikit-learn.org/stable/modules/permutation_importance.html">permutation importance</a> for single features, and ablation (refitting without a whole group of features) for groups. As extensions, I added developer track-record features computed in SQL, a store-text score from <a href="https://scikit-learn.org/stable/modules/feature_extraction.html#tfidf-term-weighting">TF-IDF</a> plus a linear model, and an ordinal model of owner buckets following <a href="https://doi.org/10.1007/3-540-44795-4_13">Frank and Hall (2001)</a>.</p>
+
+        <!-- 5. ANALYSIS -->
+        <h2 id="analysis">4. Analysis</h2>
+
+        <h3>4.1 Attention is winner-takes-most</h3>
+        <p>Only 45% of games reach 10 reviews, 5.7% reach 1,000 and 1.4% reach 10,000. The top 1% hold 80% of all reviews and the top 10% hold 98%, a Gini coefficient of 0.98 (Figure 4). This matches outside revenue estimates, where <a href="https://mp1st.com/news/40-of-steam-games-in-2025-earned-less-than-100">only 8% of 2025 releases earned more than $100,000</a>.</p>
         <figure>
-          <a class="fig-link" href="../images/projects/steam-games-1.png" data-tip="Click to open the full-size chart">
-            <img src="../images/projects/steam-games-1.png" alt="Funnel and Lorenz curve showing that the top 1% of games hold most reviews" loading="lazy">
+          <a class="fig-link" href="../images/projects/steam-games/fig04_attention_funnel_and_lorenz.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig04_attention_funnel_and_lorenz.png" alt="Funnel of review thresholds and Lorenz curve showing the top 1% of games hold 80% of reviews" loading="lazy">
           </a>
-          <figcaption>Attention is extremely unequal: most games get almost no reviews.</figcaption>
+          <figcaption><strong>Figure 4.</strong> Left: share of games passing each review threshold. Right: <a href="https://en.wikipedia.org/wiki/Lorenz_curve">Lorenz curve</a> of reviews; the dashed line is perfect equality.</figcaption>
         </figure>
 
-        <h2>Which launch-time features matter?</h2>
-        <p>Achievements (AUC 0.73), the number of Steam categories (0.72) and the number of supported languages (0.72) separate hits from other games best. The biggest yes/no gap is DLC: 19.6% of games with DLC are hits, against 3.6% without. Among genres, RPG has the highest lift (1.5x the average success rate).</p>
+        <h3>4.2 Reach and quality are different things</h3>
+        <p>The reach metrics move together: owners and review count correlate at 0.66 (<a href="https://en.wikipedia.org/wiki/Spearman%27s_rank_correlation_coefficient">Spearman</a>). The share of positive reviews does not correlate with owners at all (0.00), so a widely owned game is not necessarily a well-liked one (Figure 5). As a result only 26% of commercial successes are also well liked, and <em>hit</em> covers just 5.9% of games (Table 3).</p>
         <figure>
-          <a class="fig-link" href="../images/projects/steam-games-2.png" data-tip="Click to open the full-size chart">
-            <img src="../images/projects/steam-games-2.png" alt="Lollipop chart of AUC per launch-time feature" loading="lazy">
+          <a class="fig-link" href="../images/projects/steam-games/fig05_metric_correlations.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig05_metric_correlations.png" alt="Correlation matrix of success metrics and hexbin of review count against positive share" loading="lazy">
           </a>
-          <figcaption>AUC per feature for the hit label. 0.5 means no signal.</figcaption>
-        </figure>
-        <figure>
-          <a class="fig-link" href="../images/projects/steam-games-3.png" data-tip="Click to open the full-size chart">
-            <img src="../images/projects/steam-games-3.png" alt="Dumbbell chart comparing success rates with and without each feature" loading="lazy">
-          </a>
-          <figcaption>Success rate with and without each feature. DLC shows the largest gap.</figcaption>
+          <figcaption><strong>Figure 5.</strong> Left: Spearman correlations between candidate success metrics (games with 10+ reviews). Right: review count against positive share.</figcaption>
         </figure>
 
-        <h2>Predicting hits</h2>
-        <p>A gradient boosting model trained only on launch-time facts, on games up to 2021 and tested on later ones, reaches AUC 0.80 for the hit label. Its top 10% of predictions contain 43% of the actual hits. A developer's track record adds another 0.03 AUC.</p>
+        <h3>4.3 A fair label has to account for age</h3>
+        <p>With one global owners cutoff, 60 to 80% of games from 2009 to 2013 count as commercially successful, against under 10% of games from 2022 onwards. The per-year cutoff keeps the rate roughly flat at 10 to 20% (Figure 6). The 2025 spike in the per-year line is caused by owner ties: most 2025 games sit in the same bucket.</p>
         <figure>
-          <a class="fig-link" href="../images/projects/steam-games-4.png" data-tip="Click to open the full-size chart">
-            <img src="../images/projects/steam-games-4.png" alt="Cumulative gains curve and calibration curve for the hit model" loading="lazy">
+          <a class="fig-link" href="../images/projects/steam-games/fig06_age_bias_of_success_label.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig06_age_bias_of_success_label.png" alt="Share of games labelled commercially successful per release year under a global and a per-year cutoff" loading="lazy">
           </a>
-          <figcaption>Left: the top 10% of picks catch 43% of hits. Right: predicted chances need recalibrating because the base rate drifted.</figcaption>
+          <figcaption><strong>Figure 6.</strong> Share labelled commercially successful per release year. The shaded area is the age bias a global cutoff would introduce.</figcaption>
         </figure>
 
-        <h2>What to keep in mind</h2>
+        <h3>4.4 Which launch-time features go with success?</h3>
+        <p>For <em>hit</em>, achievements (AUC 0.73), number of Steam categories (0.72) and number of supported languages (0.72) separate successful games best, followed by DLC count (0.69), store description length (0.66) and price (0.65). Release year scores below 0.5 (0.44), so newer games are slightly less likely to be hits (Figure 7).</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig08_indicator_auc.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig08_indicator_auc.png" alt="AUC per numeric launch-time feature for the hit label" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 7.</strong> AUC per numeric feature for <em>hit</em>. The grey band (0.47 to 0.53) is too weak to matter.</figcaption>
+        </figure>
+        <p>The relationships are mostly steady climbs (Figure 8). Games with 100+ achievements are hits 34.7% of the time against 2.3% with none, and games in 11+ languages 15.3% against 2.6% for one language. Price is the exception: the hit rate rises up to $20 to $30 (15.6%), then falls for games above $30 (6.4%).</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig09_success_rate_by_bucket.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig09_success_rate_by_bucket.png" alt="Hit rate by bucket for price, languages, achievements, DLC, description length and release period" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 8.</strong> Hit rate per bucket with Wilson 95% intervals. The dashed line is the overall rate of 5.9%.</figcaption>
+        </figure>
+        <p>Among yes/no features, DLC shows the largest gap: 19.6% of games with DLC are hits, against 3.6% without (Figure 9). Free-to-play games do slightly worse than paid games.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig10_yes_no_dumbbell.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig10_yes_no_dumbbell.png" alt="Dumbbell chart of hit rate with and without each yes/no feature" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 9.</strong> Hit rate with and without each feature, with 95% intervals.</figcaption>
+        </figure>
+        <p>Among genres, RPG has the highest lift (1.5 times the average hit rate), followed by Simulation, Adventure and Strategy. Violent and Education are far below average (Figure 10). Genres overlap, so the lifts can't be added together.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig11_genre_tag_lift.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig11_genre_tag_lift.png" alt="Lift per genre and the ten highest and lowest tags for the hit label" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 10.</strong> Lift per genre (left) and the ten highest and lowest tags (right), log scale with 95% intervals. Tags are voted by players after release, so they describe a game rather than predict it.</figcaption>
+        </figure>
+
+        <h3>4.5 Do the indicators hold under every definition?</h3>
+        <p>A finding that holds for only one definition is a property of that definition, not of the games. Seven numeric indicators stay on the same side of 0.5 under all four labels: categories, languages, description length, achievements, price, DLC and audio languages. Release year flips: newer games score higher on the commercial label (largely because of owner ties in recent years) but lower on quality and engagement (Figure 11). RPG is the only genre above average under all four definitions.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig18_indicator_stability.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig18_indicator_stability.png" alt="AUC per feature under each of the four success labels" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 11.</strong> AUC per feature under each label. Markers in the grey band are too close to 0.5 to count.</figcaption>
+        </figure>
+
+        <h3>4.6 How well can success be predicted?</h3>
+        <p>Using only launch-time facts, the model ranks newer games well above chance for every label. Engagement is easiest to predict (AUC 0.91) and commercial success hardest (0.63), probably because commercial success depends most on marketing, which is not in the data (Table 5).</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 5. Model results on games released after 2021</caption>
+            <thead><tr><th>Label</th><th class="num">ROC AUC</th><th class="num">Avg. precision</th><th class="num">Base rate</th><th class="num">Better than random</th></tr></thead>
+            <tbody>
+              <tr><td>Engagement</td><td class="num">0.91</td><td class="num">0.24</td><td class="num">1.9%</td><td class="num">12.9x</td></tr>
+              <tr><td>Hit</td><td class="num">0.80</td><td class="num">0.24</td><td class="num">5.2%</td><td class="num">4.5x</td></tr>
+              <tr><td>Quality</td><td class="num">0.78</td><td class="num">0.30</td><td class="num">9.2%</td><td class="num">3.3x</td></tr>
+              <tr><td>Commercial</td><td class="num">0.63</td><td class="num">0.43</td><td class="num">29.9%</td><td class="num">1.4x</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p>In practical terms, if you check the 10% of new games the model rates highest, you find 43% of all hits; the top 30% contains 72% (Figure 12). Predicted chances above about 10% are too high, because the hit rate is lower in the test years (5.2%) than in the training years (6.9%) (Table 7).</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig13_gains_and_calibration.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig13_gains_and_calibration.png" alt="Cumulative gains curve and calibration curve for the hit model" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 12.</strong> Left: <a href="https://en.wikipedia.org/wiki/Lift_(data_mining)">cumulative gains</a> on the test years. Right: predicted chance against the actual share of hits.</figcaption>
+        </figure>
+        <p>Supported languages is by far the most important single feature, followed by categories, DLC and achievements (Figure 13). As a group, store page and extras (description length, website, DLC and achievements) matter most: removing them costs 0.026 AUC. Removing genres and categories together costs nothing, because the other features already carry that information.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig15_permutation_importance.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig15_permutation_importance.png" alt="Top 12 features by permutation importance" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 13.</strong> Drop in test AUC when one feature is shuffled.</figcaption>
+        </figure>
+
+        <h3>4.7 Do developer history and store text help?</h3>
+        <p>A developer's track record (how many games they released before, and how those did) adds 0.030 AUC for <em>hit</em> and 0.037 for quality. A score built from the store-page text adds less, except for commercial success (Table 6, Figure 14).</p>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 6. Test AUC by feature set and label</caption>
+            <thead><tr><th>Feature set</th><th class="num">Commercial</th><th class="num">Quality</th><th class="num">Engagement</th><th class="num">Hit</th></tr></thead>
+            <tbody>
+              <tr><td>Baseline</td><td class="num">0.633</td><td class="num">0.782</td><td class="num">0.907</td><td class="num">0.805</td></tr>
+              <tr><td>+ developer history</td><td class="num">0.633</td><td class="num">0.819</td><td class="num">0.920</td><td class="num">0.835</td></tr>
+              <tr><td>+ store text</td><td class="num">0.655</td><td class="num">0.792</td><td class="num">0.918</td><td class="num">0.817</td></tr>
+              <tr><td>+ both</td><td class="num">0.651</td><td class="num">0.818</td><td class="num">0.926</td><td class="num">0.836</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig23_feature_set_comparison.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig23_feature_set_comparison.png" alt="Test AUC per success label for four feature sets" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 14.</strong> The same model and time split with four feature sets.</figcaption>
+        </figure>
+
+        <!-- 6. LIMITATIONS -->
+        <h2 id="limitations">5. Limitations and further research</h2>
+        <h3>Limitations</h3>
         <ul>
-          <li>These are associations, not causes: successful games can afford more languages and DLC, so some indicators follow success rather than drive it.</li>
-          <li>Owner counts are estimated buckets, so commercial success is approximate.</li>
-          <li>The biggest drivers, such as marketing, wishlists, the quality of the game itself and luck, are not in this data.</li>
+          <li><strong>Association, not cause.</strong> Successful games can afford more languages, DLC and achievements, so some indicators may follow success rather than drive it. DLC in particular is usually released after a game has sold well, so its gap in Figure 9 partly reflects success rather than predicting it.</li>
+          <li><strong>Owners are estimates in wide buckets.</strong> SteamSpy says its <a href="https://steamspy.com/about">figures are not 100% correct and counts under 30,000 owners are unreliable</a>. Most games sit in the lowest bucket, which is why the commercial label covers 22.9% of games instead of 10% (Table 3).</li>
+          <li><strong>The base rate shifts over time.</strong> The hit rate is 6.9% in the training years and 5.2% in the test years, and the commercial rate more than doubles (Table 7). Predicted chances need recalibrating before use (Figure 12).</li>
+          <li><strong>The biggest drivers are missing.</strong> Marketing spend, wishlists, press coverage and the quality of the game itself are not among the <a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">dataset's columns</a>. That limits commercial prediction most (AUC 0.63, Table 5).</li>
+          <li><strong>Some features change after launch.</strong> DLC count, achievements and the store description can be edited later. Developer history uses exact name matches and measures earlier games at the end of the data, not at the later game's launch.</li>
+          <li><strong>The thresholds are choices.</strong> The 90th percentile, 50 reviews and 80% positive are defaults. The stability check (Figure 11) shows the main indicators hold across definitions, but not every possible threshold was tested.</li>
         </ul>
+        <div class="table-wrap">
+          <table>
+            <caption>Table 7. Success rate in the training years (up to 2021) and the test years (2022 onwards)</caption>
+            <thead><tr><th>Label</th><th class="num">Train</th><th class="num">Test</th><th class="num">Test / train</th></tr></thead>
+            <tbody>
+              <tr><td>Commercial</td><td class="num">13.2%</td><td class="num">29.9%</td><td class="num">2.26</td></tr>
+              <tr><td>Quality</td><td class="num">20.6%</td><td class="num">9.2%</td><td class="num">0.45</td></tr>
+              <tr><td>Engagement</td><td class="num">3.5%</td><td class="num">1.9%</td><td class="num">0.55</td></tr>
+              <tr><td>Hit</td><td class="num">6.9%</td><td class="num">5.2%</td><td class="num">0.75</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <h3>Further research</h3>
+        <ul>
+          <li><strong>Point-in-time data.</strong> Dated snapshots of reviews and owners (for example from <a href="https://steamdb.info/">SteamDB</a>) would allow measuring each game at a fixed age and building developer history as it looked on launch day.</li>
+          <li><strong>Wishlist and follower data</strong>, the closest public stand-in for pre-launch demand, would most likely improve commercial prediction.</li>
+          <li><strong>Better text features.</strong> Replace TF-IDF with <a href="https://www.sbert.net/">sentence embeddings</a> of the store description and compare against the +0.012 AUC measured here (Table 6).</li>
+          <li><strong>Looser developer matching</strong> (lowercase, strip "Inc." and "Ltd.") so a studio spelled two ways counts once.</li>
+          <li><strong>Causal designs</strong>, such as comparing the same game before and after adding languages, to test whether the indicators drive success or follow it.</li>
+        </ul>
+
+        <!-- 7. CONCLUSION -->
+        <h2 id="conclusion">6. Conclusion</h2>
+        <p>Success on Steam is rare and concentrated, so it has to be defined as a top percentile and compared within release years to be fair to newer games (Figures 4 and 6). Reach and quality are separate dimensions (Figure 5). Games that launch with more languages, more Steam categories, achievements, a fuller store page and a mid-range price are consistently more likely to succeed, under every definition tested (Figure 11). Launch-time facts alone rank future hits well (AUC 0.80, 43% of hits in the top 10% of predictions), and a developer's track record adds a little more (Table 6). What the data can't tell us is whether those features cause success or simply mark games made by teams that were already likely to succeed.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/steam-games/fig17_key_numbers.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/steam-games/fig17_key_numbers.png" alt="Key numbers: 80% of reviews to the top 1%, 5.9% hits, AUC 0.80, 43% of successes in the top 10% of predictions" loading="lazy">
+          </a>
+          <figcaption><strong>Figure 15.</strong> The key numbers.</figcaption>
+        </figure>
+
+        <h2 id="references">References</h2>
+        <ol class="refs">
+          <li>FronkonGames. <a href="https://www.kaggle.com/datasets/fronkongames/steam-games-dataset">Steam Games Dataset</a>. Kaggle.</li>
+          <li>SteamSpy. <a href="https://steamspy.com/about">About SteamSpy</a> (owner estimation method and accuracy).</li>
+          <li>GamingOnLinux (2025). <a href="https://www.gamingonlinux.com/2025/01/valve-saw-a-record-breaking-nearly-19-000-games-released-on-steam-in-2024">Valve saw a record-breaking nearly 19,000 games released on Steam in 2024</a>.</li>
+          <li>GameDev Reports. <a href="https://gamedevreports.substack.com/p/steamdb-in-2023-14533-games-were">SteamDB: in 2023, 14,533 games were released on Steam</a>.</li>
+          <li>MP1st. <a href="https://mp1st.com/news/40-of-steam-games-in-2025-earned-less-than-100">40% of Steam games in 2025 earned less than $100</a> (Gamalytic estimates).</li>
+          <li>Frank, E. and Hall, M. (2001). <a href="https://doi.org/10.1007/3-540-44795-4_13">A Simple Approach to Ordinal Classification</a>. ECML 2001.</li>
+          <li>scikit-learn. <a href="https://scikit-learn.org/stable/modules/generated/sklearn.ensemble.HistGradientBoostingClassifier.html">HistGradientBoostingClassifier</a> and <a href="https://scikit-learn.org/stable/modules/permutation_importance.html">permutation importance</a>.</li>
+          <li>DuckDB. <a href="https://duckdb.org/docs/">Documentation</a>.</li>
+        </ol>
 
         <div class="post-links">
           <a class="btn btn-primary" href="../notebooks/steam-game-success.html">Read the full notebook</a>
