@@ -242,8 +242,9 @@ a { color: var(--delft); }
   list-style: none;
   margin: 40px 0 0;
   padding: 0;
-  border-top: 2px solid var(--ink);
 }
+/* the heavy top rule sits on the first row, so it lines up with the row dividers */
+.project:first-child { border-top: 2px solid var(--ink); }
 
 .project {
   position: relative;          /* lets the title link cover the whole row */
@@ -329,11 +330,7 @@ a { color: var(--delft); }
 }
 
 /* ===== About ===== */
-.about {
-  display: grid;
-  grid-template-columns: 9rem 1fr;
-  gap: 24px;
-}
+.about h2 { margin-bottom: 20px; }
 
 .about-text p {
   max-width: 62ch;
@@ -601,8 +598,9 @@ a { color: var(--delft); }
 
 /* ===== Blog index ===== */
 .page-head {
-  padding: clamp(48px, 7vw, 88px) 0 0;
+  padding: clamp(40px, 6vw, 72px) 0 clamp(56px, 8vw, 96px);
 }
+.page-head .projects { margin-top: 24px; }
 
 .page-head h1 {
   font-size: clamp(1.9rem, 4vw, 2.75rem);
@@ -873,7 +871,7 @@ a { color: var(--delft); }
 /* Star schema: hovering a skill highlights that row and its table's relationship */
 .st-table { transition: opacity 0.2s ease, border-color 0.2s ease; }
 .st-table li {
-  cursor: help;
+  cursor: default;
   transition: background-color 0.15s ease, color 0.15s ease, padding-left 0.15s ease;
 }
 .st-table li:hover,
@@ -927,7 +925,6 @@ a { color: var(--delft); }
   .project { grid-template-columns: 1fr; gap: 12px; }
   .project:has(.thumb) { grid-template-columns: 96px 1fr; column-gap: 16px; }
   .project:has(.thumb) .tags { grid-column: 2; }
-  .about { grid-template-columns: 1fr; gap: 16px; }
 }
 
 @media (max-width: 560px) {
