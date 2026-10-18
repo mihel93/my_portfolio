@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Do richer countries keep more children in school? | Mihail Deligrozev</title>
+  <meta name="description" content="Wealth, public spending and out-of-school rates across 217 economies, 2000–2025, using World Bank development indicators.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <div class="wrap header-inner">
+      <a class="logo" href="../index.html">mihail deligrozev</a>
+      <nav aria-label="Main">
+        <a href="../index.html#about">About</a>
+        <a href="../index.html#skills">Skills</a>
+        <a href="../index.html#work">Projects</a>
+        <a href="./">Blog</a>
+        <a href="../index.html#contact">Contact</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="post">
+    <article class="wrap">
+      <div class="post-body">
+        <a class="back" href="./">All posts</a>
+
+        <h1>Do richer countries keep more children in school?</h1>
+        <p class="post-lead">Wealth, public spending and out-of-school rates across 217 economies, 2000–2025, using World Bank development indicators.</p>
+        <ul class="tags"><li>Python</li><li>pandas</li><li>SciPy</li><li>World Bank WDI</li></ul>
+
+        <dl class="facts" aria-label="Project facts">
+          <div><dt>Data</dt><dd>World Bank World Development Indicators, 217 economies</dd></div>
+          <div><dt>Tools</dt><dd>pandas, SciPy, matplotlib</dd></div>
+          <div><dt>Type</dt><dd>TU Delft coursework (EPA-1316), rebuilt</dd></div>
+        </dl>
+
+        <h2>The question</h2>
+        <p>Are children and adolescents more likely to be out of school in poorer countries, and does higher government spending per student help?</p>
+        <ul>
+          <li><strong>H1:</strong> countries with higher GDP per capita have lower out-of-school rates.</li>
+          <li><strong>H2:</strong> countries that spend less per student have higher out-of-school rates.</li>
+        </ul>
+
+        <h2>The data</h2>
+        <p>A World Bank DataBank export of five indicators for 217 economies. It isn't a clean table: missing values are written as "..", footer lines sit below the data, and five regional and income aggregates are mixed in with the countries, which would count the same children twice. Spending data also stops in 2018, so any test that needs spending has to use 2018 or earlier.</p>
+
+        <h2>The bigger picture</h2>
+        <p>Since 2000 the share of primary-age children out of school in low-income countries fell from 45% to about 25%, but it has been flat since around 2014. For adolescents it's getting worse: 35.5% in 2013, 42% in 2024.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/education-spending-1.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/education-spending-1.png" alt="Line charts of out-of-school rates for low and lower-middle income countries" loading="lazy">
+          </a>
+          <figcaption>Progress has stalled in low-income countries, and reversed for adolescents.</figcaption>
+        </figure>
+
+        <h2>Testing the hypotheses</h2>
+        <p>Wealth is strongly linked to keeping children in school: GDP per capita correlates at −0.59 with the share of adolescents out of school (2015, 62 countries). In the poorest quarter of countries the median is 20.3% of adolescents out of school; in the richest quarter it's 1.0%. <strong>H1 is supported.</strong></p>
+        <figure>
+          <a class="fig-link" href="../images/projects/education-spending-2.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/education-spending-2.png" alt="Forest plot of rank correlations with bootstrap confidence intervals" loading="lazy">
+          </a>
+          <figcaption>Wealth separates countries far more than spending effort does.</figcaption>
+        </figure>
+        <figure>
+          <a class="fig-link" href="../images/projects/education-spending-3.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/education-spending-3.png" alt="Bar chart of median out-of-school rates by GDP quartile" loading="lazy">
+          </a>
+          <figcaption>The poorest quarter of countries has by far the most children out of school.</figcaption>
+        </figure>
+        <p>Spending effort (spending per student as a share of GDP per capita) shows only a weak raw link. Spending in dollars looks strongly linked, but it's almost the same variable as wealth (ρ = 0.97 with GDP per capita). Holding GDP constant with a partial rank correlation, no spending measure has a significant link left. <strong>H2 is not supported.</strong></p>
+
+        <h2>Does it still hold?</h2>
+        <p>Out-of-school rates and GDP run to 2024, so H1 can be retested on a larger, more recent sample. With 136 economies in 2021 the link is even stronger (ρ = −0.71 for adolescents), and it looks like a threshold: rates stay around 30% below roughly $2,000 per capita, drop steeply up to $4,000, and are close to zero above $20,000. The result also holds in every year from 2008 to 2016.</p>
+        <figure>
+          <a class="fig-link" href="../images/projects/education-spending-4.png" data-tip="Click to open the full-size chart">
+            <img src="../images/projects/education-spending-4.png" alt="Scatter plot of out-of-school rates against GDP per capita in 2021" loading="lazy">
+          </a>
+          <figcaption>The wealth gradient in 2021, with a rolling median showing the threshold.</figcaption>
+        </figure>
+
+        <h2>What to keep in mind</h2>
+        <ul>
+          <li>Countries that report all five indicators are about three times richer than those that don't, so the poorest countries are under-represented.</li>
+          <li>There's no spending data after 2018, so H2 can't be tested on recent years.</li>
+          <li>These are correlations between countries, not causal effects.</li>
+        </ul>
+
+        <div class="post-links">
+          <a class="btn btn-primary" href="../notebooks/world-bank-school-dropout.html">Read the full notebook</a>
+          <!-- Add your repo link and uncomment:
+          <a class="btn btn-ghost" href="https://github.com/yourusername/REPO">Code on GitHub</a>
+          -->
+        </div>
+
+        <nav class="post-nav" aria-label="More posts">
+          <a class="prev" href="hague-energy-labels.html">Previous: Do richer neighbourhoods live in greener homes?</a>
+        </nav>
+      </div>
+    </article>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap">
+      <p>© 2026 Mihail Deligrozev</p>
+    </div>
+  </footer>
+
+  <script src="../site.js" defer></script>
+</body>
+</html>
